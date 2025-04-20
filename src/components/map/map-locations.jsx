@@ -12,7 +12,7 @@ import {
   TYPES_FILTER_NAME,
 } from "@/lib/consts/style-consts";
 import { useMemo } from "react";
-import unionBy from "lodash.unionBy";
+import unionBy from "lodash.unionby";
 
 const MapLocations = ({
   onSelectPlace,

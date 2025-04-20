@@ -1,0 +1,390 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  --background: #ffffff;
+  --white: #ffffff;
+  --box-shadow-color: #0d2f2b33;
+  --box-shadow: 0px 0px 20px 0px #0d2f2b33;
+  --text: #0d2f2b;
+  --primary-text: #6fd46f;
+
+  --button-primary-bg: #f1fbf1;
+  --button-primary-txt: #6fd46f;
+  --button-primary-bg-hover: #d4f3d4;
+  --button-primary-txt-hover: #0d2f2b;
+  --button-primary-bg-active: #c5eec5;
+  --button-primary-txt-active: #0d2f2b;
+
+  --button-secondary-bg: #0d2f2b;
+  --button-secondary-txt: #e7ebea;
+  --button-secondary-bg-hover: #000000;
+  --button-secondary-txt-hover: #e7ebea;
+  --button-secondary-bg-active: #0d2f2b;
+  --button-secondary-txt-active: #ffffff;
+  --button-secondary-bg-disabled: #0d2f2b;
+  --button-secondary-txt-disabled: #ffffff;
+
+  --button-neutral-bg: #e7ebea;
+  --button-neutral-txt: #0d2f2b;
+  --button-neutral-bg-hover: #cfd5d5;
+  --button-neutral-txt-hover: #0d2f2b;
+  --button-neutral-bg-active: #b7c1c0;
+  --button-neutral-txt-active: #0d2f2b;
+
+  --button-basic-bg: #ffffff;
+  --button-basic-txt: #0d2f2b;
+  --button-basic-bg-hover: #0d2f2b1a;
+  --button-basic-txt-hover: #0d2f2b;
+  --button-basic-bg-active: #0d2f2b33;
+  --button-basic-txt-active: #0d2f2b;
+
+  --button-transparent-bg: transparent;
+  --button-transparent-txt: #0D2F2B;
+  --button-transparent-bg-hover: #E7EBEA;
+  --button-transparent-txt-hover: #0d2f2b;
+  --button-transparent-bg-active: #CFD5D5;
+  --button-transparent-txt-active: #0d2f2b;
+
+
+  --foreground: #ededed;
+
+  --gray-10: #e7ebea;
+  --gray-20: #cfd5d5;
+  --gray-30: #B7C1C0;
+  --gray-40: #9eacaa;
+  --gray-50: #859694;
+  --gray-60: #6e8280;
+  --gray-90: #264441;
+  --gray-100: #0d2f2b;
+
+  --primary-30: #d4f3d4;
+  --primary-100: #6fd46f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff;
+    --white: #ffffff;
+    --box-shadow-color: #0d2f2b33;
+    --box-shadow: 0px 0px 20px 0px #0d2f2b33;
+    --text: #0d2f2b;
+    --primary-text: #6fd46f;
+
+    --button-primary-bg: #f1fbf1;
+    --button-primary-txt: #6fd46f;
+    --button-primary-bg-hover: #d4f3d4;
+    --button-primary-txt-hover: #0d2f2b;
+    --button-primary-bg-active: #c5eec5;
+    --button-primary-txt-active: #0d2f2b;
+
+    --button-secondary-bg: #0d2f2b;
+    --button-secondary-txt: #e7ebea;
+    --button-secondary-bg-hover: #000000;
+    --button-secondary-txt-hover: #e7ebea;
+    --button-secondary-bg-active: #0d2f2b;
+    --button-secondary-txt-active: #ffffff;
+    --button-secondary-bg-disabled: #0d2f2b;
+    --button-secondary-txt-disabled: #ffffff;
+
+    --button-neutral-bg: #e7ebea;
+    --button-neutral-txt: #0d2f2b;
+    --button-neutral-bg-hover: #cfd5d5;
+    --button-neutral-txt-hover: #0d2f2b;
+    --button-neutral-bg-active: #b7c1c0;
+    --button-neutral-txt-active: #0d2f2b;
+
+    --button-basic-bg: #ffffff;
+    --button-basic-txt: #0d2f2b;
+    --button-basic-bg-hover: #0d2f2b1a;
+    --button-basic-txt-hover: #0d2f2b;
+    --button-basic-bg-active: #0d2f2b33;
+    --button-basic-txt-active: #0d2f2b;
+
+    --button-transparent-bg: transparent;
+    --button-transparent-txt: #0D2F2B;
+    --button-transparent-bg-hover: #E7EBEA;
+    --button-transparent-txt-hover: #0d2f2b;
+    --button-transparent-bg-active: #CFD5D5;
+    --button-transparent-txt-active: #0d2f2b;
+
+
+    --foreground: #ededed;
+
+    --gray-10: #e7ebea;
+    --gray-20: #cfd5d5;
+    --gray-30: #B7C1C0;
+    --gray-40: #9eacaa;
+    --gray-50: #859694;
+    --gray-60: #6e8280;
+    --gray-90: #264441;
+    --gray-100: #0d2f2b;
+
+    --primary-30: #d4f3d4;
+    --primary-100: #6fd46f;
+  }
+}
+
+body {
+  color: var(--text);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.button {
+  border: 1px solid transparent;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.regular-btn-padding {
+  padding: 0 12px;
+}
+
+.small-btn-padding {
+  padding: 0 8px;
+  min-height: 32px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.center-content-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*******************************************************************************************/
+
+.button-primary {
+  color: var(--button-primary-txt);
+  background: var(--button-primary-bg);
+}
+
+.button-primary:hover {
+  color: var(--button-primary-txt-hover);
+  background: var(--button-primary-bg-hover);
+}
+
+.button-primary:active {
+  color: var(--button-primary-txt-active);
+  background: var(--button-primary-bg-active);
+}
+
+.button-primary:focus {
+  color: var(--button-primary-txt-active);
+  background: var(--button-primary-bg-active);
+}
+
+/*******************************************************************************************/
+
+.button-secondary {
+  color: var(--button-secondary-txt);
+  background: var(--button-secondary-bg);
+}
+
+.button-secondary:hover {
+  color: var(--button-secondary-txt-hover);
+  background: var(--button-secondary-bg-hover);
+}
+
+.button-secondary:active {
+  color: var(--button-secondary-txt-active);
+  background: var(--button-secondary-bg-active);
+}
+
+.button-secondary:focus {
+  color: var(--button-secondary-txt-active);
+  background: var(--button-secondary-bg-active);
+}
+
+/*******************************************************************************************/
+
+.button-neutral {
+  color: var(--button-neutral-txt);
+  background: var(--button-neutral-bg);
+}
+
+.button-neutral:hover {
+  color: var(--button-neutral-txt-hover);
+  background: var(--button-neutral-bg-hover);
+}
+
+.button-neutral:active {
+  color: var(--button-neutral-txt-active);
+  background: var(--button-neutral-bg-active);
+}
+
+.button-neutral:focus {
+  color: var(--button-neutral-txt-active);
+  background: var(--button-neutral-bg-active);
+}
+
+/*******************************************************************************************/
+
+.button-basic {
+  color: var(--button-basic-txt);
+  background: var(--button-basic-bg);
+}
+
+.button-basic:hover {
+  color: var(--button-basic-txt-hover);
+  background: var(--button-basic-bg-hover);
+}
+
+.button-basic:active {
+  color: var(--button-basic-txt-active);
+  background: var(--button-basic-bg-active);
+}
+
+.button-basic:focus {
+  color: var(--button-basic-txt-active);
+  background: var(--button-basic-bg-active);
+}
+
+/*******************************************************************************************/
+
+.button-transparent {
+  color: var(--button-transparent-txt);
+  background: var(--button-transparent-bg);
+}
+
+.button-transparent:hover {
+  color: var(--button-transparent-txt-hover);
+  background: var(--button-transparent-bg-hover);
+}
+
+.button-transparent:active {
+  color: var(--button-transparent-txt-active);
+  background: var(--button-transparent-bg-active);
+}
+
+.button-transparent:focus {
+  color: var(--button-transparent-txt-active);
+  background: var(--button-transparent-bg-active);
+}
+
+/*******************************************************************************************/
+
+.map-container {
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.leaflet-marker-icon {
+  background: red;
+  border-radius: 50%;
+  min-width: 40px;
+}
+
+.z-50 {
+  z-index: 1000;
+}
+
+/******************************************************************/
+
+.accordion-wbg {
+  padding: 0 !important;
+}
+
+.accordion-item-wbg > h2 > button {
+  padding: 0 !important;
+  max-width: 100dvw;
+  overflow: hidden;
+}
+
+.accordion-wbg section > div {
+  padding: 0 !important;
+}
+
+.accordion-item-wbg > h2 > button > span {
+  display: none !important;
+}
+
+/************************************************************************************/
+
+.leaflet-tooltip {
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: hidden;
+  background-color: transparent !important;
+}
+
+/*******************************************************************************************/
+
+.i-20 {
+  font-size: 20px;
+  display: flex;
+}
+
+.i-16 {
+  font-size: 16px;
+  display: flex;
+}
+
+.i-10 {
+  font-size: 10px;
+  display: flex;
+}
+
+.i-12 {
+  font-size: 12px;
+  display: flex;
+}
+/********************************************************************************************/
+
+dialog {
+  z-index: 999;
+  border-radius: 16px;
+
+  box-shadow: 0px 0px 20px 0px #0D2F2B33;
+}
+
+.cover-full-div {
+  width: 100dvw;
+  height: 100dvh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: #E7EBEA4D;
+}
+
+i {
+  display: flex;
+}
+
+.px-2 {
+  padding: 0 !important;
+}
+
+.center-loader-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdown-trigger-user-menu {
+  height: 60px;
+}
+
+.react-tiny-popover-container {
+  z-index: 9999;
+}

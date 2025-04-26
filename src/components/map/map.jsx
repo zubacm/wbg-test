@@ -15,6 +15,7 @@ const Map = ({
   onSelectPlace,
   selectedLocations,
   onShowInfo,
+  mapLocationsRef,
   ...rest
 }) => {
   const [mapData, setMapData] = useState({
@@ -40,6 +41,7 @@ const Map = ({
       {/* <MapElement center={[44.7722, 17.191]} />
       <MapElement center={[44.8722, 17.391]} /> */}
       <MapLocations
+        ref={mapLocationsRef}
         onSelectPlace={(data) => {
           onSelectPlace(data);
         }}

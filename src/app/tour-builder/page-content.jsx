@@ -67,6 +67,7 @@ export default function TourBuilderContent() {
 
   const infoModalRef = useRef();
   const mapRef = useRef();
+  const mapLocationsRef = useRef();
   const saveTourRef = useRef();
 
   const handleSelectPlace = (newPlace) => {
@@ -186,13 +187,16 @@ export default function TourBuilderContent() {
           <MainMenu
             onOpenTour={(tour) => {
               onSelectNewTour(tour);
-              console.log("open tour", tour);
+              // console.log("open tour", tour);
             }}
             onSaveTour={() =>
               saveTourRef?.current?.open(selectedLocationsRef?.current)
             }
             canSaveTour={selectedLocations?.length > 0}
             onGetNavigationUrl={getNavigationUrl}
+            onSearchSelectPlace={(x) => {
+              mapLocationsRef?.current?.addSearchedPlace(x);
+            }}
           />
         </Suspense>
 
@@ -221,6 +225,7 @@ export default function TourBuilderContent() {
             onSelectPlace={handleSelectPlace}
             selectedLocations={selectedLocations}
             onShowInfo={handleShowInfo}
+            mapLocationsRef={mapLocationsRef}
           />
         </Suspense>
 

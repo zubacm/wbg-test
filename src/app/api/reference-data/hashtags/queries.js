@@ -17,3 +17,20 @@ export const useHashtags = () => {
     queryFn: async () => getHashtags(),
   });
 };
+
+// ====================================================================================================
+const getHashtagsSearch = async (text) => {
+  const { data } = await api.get(
+    `/hashtag?_fields[]=id&_fields[]=name&_fields[]=count&_fields[]=acf&acf_format=standard&perPage=100&search=${text}`
+  );
+
+  return data;
+};
+
+export const useHashtagsSearch = ({text}) => {
+  return useQuery({
+    queryKey: ["hashtags-search", text],
+    queryFn: async () => getHashtagsSearch(text),
+    enabled: text?.length > 0,
+  });
+};

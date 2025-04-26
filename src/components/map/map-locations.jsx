@@ -11,10 +11,11 @@ import {
   TEXT_FILTER_NAME,
   TYPES_FILTER_NAME,
 } from "@/lib/consts/style-consts";
-import { useMemo } from "react";
+import { useImperativeHandle, useMemo, useState } from "react";
 import unionBy from "lodash.unionby";
 
 const MapLocations = ({
+  ref,
   onSelectPlace,
   selectedIndex,
   onAction,
@@ -26,6 +27,7 @@ const MapLocations = ({
   // const router = useRouter();
   // const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [searchedPlace, setSearchedPlace] = useState();
 
   const textFilter = searchParams?.get(TEXT_FILTER_NAME) || "";
   const countriesFilter = searchParams?.get(COUNTRIES_FILTER_NAME)?.split(",");
@@ -43,7 +45,7 @@ const MapLocations = ({
   const map = useMap();
 
   const uniquePlaces = useMemo(() => {
-    let result = unionBy((data || []), (selectedLocations || []), 'id');
+    let result = unionBy(data || [], selectedLocations || [], "id");
 
     // const arr2 = Object.fromEntries(
     //   (selectedLocations || []).map((o) => [o.id, o])
@@ -58,11 +60,31 @@ const MapLocations = ({
     return result;
   }, [data, selectedLocations]);
 
+  // Expose functions through ref
+  useImperativeHandle(ref, () => ({
+    addSearchedPlace(newPlace) {
+      if (uniquePlaces?.some((x) => x?.id === newPlace?.id)) {
+        map.setView([
+          newPlace?.acf?.location?.lat,
+          newPlace?.acf?.location?.lng,
+        ]);
+        document.getElementById(`map-element-${newPlace?.id}`)?.click();
+      } else {
+        setSearchedPlace(newPlace);
+        map.setView([
+          newPlace?.acf?.location?.lat,
+          newPlace?.acf?.location?.lng,
+        ]);
+      }
+    },
+  }));
+
   return (
     <>
       {uniquePlaces?.map((x, index) => (
         <MapElement
           key={`location__${index}`}
+          id={x?.id}
           countryShort={x?.acf?.location?.country_short}
           city={x?.acf?.location?.city}
           media={x?.featured_media}
@@ -89,6 +111,7 @@ const MapLocations = ({
           isSelected={selectedLocations?.some((y) => y?.id === x?.id)}
           onShowInfo={(thumbnail) =>
             onShowInfo?.({
+              ...x,
               id: x?.id,
               thumbnail: thumbnail,
               countryShort: x?.acf?.location?.country_short,
@@ -102,6 +125,55 @@ const MapLocations = ({
           }
         />
       ))}
+
+      {searchedPlace?.id !== null && searchedPlace?.id !== undefined && (
+        <MapElement
+          id={searchedPlace?.id}
+          countryShort={searchedPlace?.acf?.location?.country_short}
+          city={searchedPlace?.acf?.location?.city}
+          media={searchedPlace?.featured_media}
+          center={[
+            searchedPlace?.acf?.location?.lat,
+            searchedPlace?.acf?.location?.lng,
+          ]}
+          selectedIndex={selectedIndex}
+          name={searchedPlace?.acf?.location?.name}
+          onSelect={(thumbnail) =>
+            onSelectPlace?.({
+              id: searchedPlace?.id,
+              thumbnail: thumbnail,
+              countryShort: searchedPlace?.acf?.location?.country_short,
+              city: searchedPlace?.acf?.location?.city,
+              name: searchedPlace?.acf?.location?.name,
+              lat: searchedPlace?.acf?.location?.lat,
+              lng: searchedPlace?.acf?.location?.lng,
+              shortDescription: searchedPlace?.acf?.short_description,
+              ...searchedPlace,
+            })
+          }
+          onZoomPlace={() => {
+            map.setView([
+              searchedPlace?.acf?.location?.lat,
+              searchedPlace?.acf?.location?.lng,
+            ]);
+            // map.setZoom(20);
+          }}
+          isSelected={selectedLocations?.some((y) => y?.id === x?.id)}
+          onShowInfo={(thumbnail) =>
+            onShowInfo?.({
+              id: searchedPlace?.id,
+              thumbnail: thumbnail,
+              countryShort: searchedPlace?.acf?.location?.country_short,
+              city: searchedPlace?.acf?.location?.city,
+              name: searchedPlace?.acf?.location?.name,
+              lat: searchedPlace?.acf?.location?.lat,
+              lng: searchedPlace?.acf?.location?.lng,
+              shortDescription: searchedPlace?.acf?.short_description,
+              feature: searchedPlace?.feature,
+            })
+          }
+        />
+      )}
       {/* <MapElement center={[44.7722, 17.191]} />
       <MapElement center={[44.8722, 17.391]} /> */}
     </>

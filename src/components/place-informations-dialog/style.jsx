@@ -131,7 +131,7 @@ export const HeadWrapper = styled.div`
 `;
 
 export const TimesBtnWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   right: 36px;
   top: 36px;
 `;

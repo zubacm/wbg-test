@@ -3,6 +3,7 @@
 import ButtonBasic from "@/components/buttons/button-basic";
 import ButtonNeutral from "@/components/buttons/button-neutral";
 import {
+  Backdrop,
   MobileMenuDrawerContent,
   MobileNavigationWrapper,
   MobileWrapper,
@@ -13,7 +14,8 @@ import HorizontalLine from "@/components/horizontal-line";
 import MobileMenuFooter from "./mobile-menu-footer";
 import { MenuItem } from "@/components/main-menu/main-menu-desktop/style";
 import ShareButton from "@/components/share-button";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function MobileMenu({
   onSaveTour = () => {},
@@ -22,103 +24,111 @@ export default function MobileMenu({
   onOpenSavedTours = () => {},
   canSaveTour = false,
   onGetNavigationUrl = () => {},
-  onSearch = () => {}
+  onSearch = () => {},
 }) {
   const t = useTranslations("general");
   const shareButtonRef = useRef();
   // const generalTranslation = useTranslations("general");
-
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [open, setOpen] = useState(false);
+  // const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   return (
-    <MobileWrapper>
-      <div className="">
-        {isOpen !== true && (
-          <ButtonBasic onClick={onOpen}>
-            <i className="fi fi-rs-bars-staggered i-20" />
-          </ButtonBasic>
-        )}
-        {isOpen === true && (
+    <>
+      <MobileWrapper className="sis">
+        <div className="sfsf">
           <ButtonBasic
             onClick={(e) => {
-              e?.preventDefault();
-              e?.stopImmediatePropagation();
-              onClose();
+              setOpen(!open);
             }}
           >
-            <i className="fi fi-rs-cross i-20" />
+            <i
+              className={
+                open === true
+                  ? "fi fi-rs-cross i-20"
+                  : "fi fi-rs-bars-staggered i-20"
+              }
+            />
           </ButtonBasic>
-        )}
-      </div>
-      <Drawer
-        size="5xl"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        placement="top"
-      >
-        <DrawerContent>
-          {(onClose) => (
-            <>
-              {/* <DrawerHeader className="flex flex-col gap-1">
+        </div>
+
+        <Drawer
+          size="5xl"
+          isOpen={open}
+          // onOpenChange={onOpenChange}
+          placement="top"
+        >
+          <DrawerContent>
+            {(onClose) => (
+              <>
+                {/* <DrawerHeader className="flex flex-col gap-1">
                 Drawer Title
               </DrawerHeader> */}
-              {/* <DrawerBody> */}
-              <MobileMenuDrawerContent>
-                <div className="padded-div">
-                  <ButtonNeutral className="login-btn" center={true}>
-                    {t("login")}
-                  </ButtonNeutral>
-                </div>
-                <HorizontalLine />
-                <div className="padded-div">
-                  {canSaveTour === true && (
+                {/* <DrawerBody> */}
+                <MobileMenuDrawerContent>
+                  {/* {open === true &&
+                    createPortal(
+                      <Backdrop
+                        className="back"
+                        onClick={() => setOpen(false)}
+                      />,
+                      document.body
+                    )} */}
+
+                  <div className="padded-div">
+                    <ButtonNeutral className="login-btn" center={true}>
+                      {t("login")}
+                    </ButtonNeutral>
+                  </div>
+                  <HorizontalLine />
+                  <div className="padded-div">
+                    {canSaveTour === true && (
+                      <MenuItem
+                        className="menu-item"
+                        onClick={() => {
+                          onSaveTour();
+                          onClose();
+                        }}
+                      >
+                        <i className="fi-rs-disk i-16" />
+                        <div>{t("saveTour")}</div>
+                      </MenuItem>
+                    )}
+
+                    <ShareButton ref={shareButtonRef}>
+                      <MenuItem
+                        className="menu-item"
+                        onClick={() => {
+                          const tourPath = onGetNavigationUrl();
+
+                          shareButtonRef?.current?.toggle(tourPath);
+                        }}
+                      >
+                        <i className="fi-rs-share i-16" />
+                        <div>{t("shareTour")}</div>
+                      </MenuItem>
+                    </ShareButton>
+
                     <MenuItem
                       className="menu-item"
                       onClick={() => {
-                        onSaveTour();
+                        onOpenSavedTours();
                         onClose();
                       }}
                     >
-                      <i className="fi-rs-disk i-16" />
-                      <div>{t("saveTour")}</div>
+                      <i className="fi-rs-folder-open i-16" />
+                      <div>{t("openSavedTours")}</div>
                     </MenuItem>
-                  )}
-
-                  <ShareButton ref={shareButtonRef}>
                     <MenuItem
                       className="menu-item"
                       onClick={() => {
-                        const tourPath = onGetNavigationUrl();
-
-                        shareButtonRef?.current?.toggle(tourPath);
+                        onExitTourBuilder();
+                        onClose();
                       }}
                     >
-                      <i className="fi-rs-share i-16" />
-                      <div>{t("shareTour")}</div>
+                      <i className="fi-rs-cross i-16" />
+                      <div>{t("exitTourBuilder")}</div>
                     </MenuItem>
-                  </ShareButton>
-
-                  <MenuItem
-                    className="menu-item"
-                    onClick={() => {
-                      onOpenSavedTours();
-                      onClose();
-                    }}
-                  >
-                    <i className="fi-rs-folder-open i-16" />
-                    <div>{t("openSavedTours")}</div>
-                  </MenuItem>
-                  <MenuItem
-                    className="menu-item"
-                    onClick={() => {
-                      onExitTourBuilder();
-                      onClose();
-                    }}
-                  >
-                    <i className="fi-rs-cross i-16" />
-                    <div>{t("exitTourBuilder")}</div>
-                  </MenuItem>
-                  {/* <MobileNavigationWrapper>
+                    {/* <MobileNavigationWrapper>
                     <NavbarItem>{generalTranslation("home")}</NavbarItem>
                     <NavbarItem isActive={true}>
                       {generalTranslation("discover")}
@@ -126,16 +136,17 @@ export default function MobileMenu({
                     <NavbarItem>{generalTranslation("tours")}</NavbarItem>
                     <NavbarItem>{generalTranslation("makeATour")}</NavbarItem>
                   </MobileNavigationWrapper> */}
-                </div>
-                <MobileMenuFooter />
-              </MobileMenuDrawerContent>
+                  </div>
+                  <MobileMenuFooter />
+                </MobileMenuDrawerContent>
 
-              {/* </DrawerBody> */}
-              {/* <DrawerFooter>og</DrawerFooter> */}
-            </>
-          )}
-        </DrawerContent>
-      </Drawer>
-    </MobileWrapper>
+                {/* </DrawerBody> */}
+                {/* <DrawerFooter>og</DrawerFooter> */}
+              </>
+            )}
+          </DrawerContent>
+        </Drawer>
+      </MobileWrapper>
+    </>
   );
 }

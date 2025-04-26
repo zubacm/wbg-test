@@ -36,7 +36,6 @@ const getPlaces = async ({
   }
 
   if (countries?.length > 0) {
-    console.log("zemlje", countries, countries?.length)
     if (path != `/place?`) {
       path += `&`;
     }
@@ -57,10 +56,6 @@ const getPlaces = async ({
     path += `_type=${types.join(",")}&`;
   }
 
-
-  console.log("get places", path, countries)
-
-
   if (features?.hashtags > 0) {
     if (path != `/place?`) {
       path += `&`;
@@ -68,12 +63,10 @@ const getPlaces = async ({
     path += `hashtag=${hashtags.join(",")}&`;
   }
 
-  path += `_fields[]=id&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard&per_page=${perPage}`;
+  path += `_fields[]=id&_fields[]=link&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard&per_page=${perPage}`;
   // const { data } = await api.get(`/place?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`);
 
-  console.log("path", path);
   const { data } = await api.get(path);
-  console.log("res data", data);
   return data;
 };
 
@@ -102,12 +95,38 @@ export const usePlaces = ({
   });
 };
 
+
+export const usePlacesSearch = ({
+  text,
+  perPage,
+  countries,
+  hashtags,
+  features,
+  types,
+  disabled,
+}) => {
+  return useQuery({
+    queryKey: [
+      "places-search",
+      text,
+      countries?.toString(),
+      hashtags?.toString(),
+      features?.toString(),
+      types?.toString(),
+      perPage,
+    ],
+    queryFn: async () =>
+      getPlaces({ text, perPage, countries, features, types, hashtags }),
+    enabled: disabled !== true,
+  });
+};
+
 // ====================================================================================================
 
 const getPlacesByIds = async (ids) => {
   // const { data } = await api.get(`/place?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`);
   const { data } = await api.get(
-    `/place?include=${ids}&_fields[]=id&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard`
+    `/place?include=${ids}&_fields[]=id&_fields[]=link&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard`
   );
 
   return data;

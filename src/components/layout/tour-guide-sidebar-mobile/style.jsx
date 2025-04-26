@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   gap: 8px;
   z-index: 499;
+  max-height: calc(100dvh - 70px);
 
   & .light-text {
     color: var(--gray-50);

@@ -79,7 +79,11 @@ export default function TourGuideSidebarMobile({
               setShowFilters(!showFilters);
             }}
           >
-            <i className="fi fi-rs-settings-sliders i-20" />
+            {showFilters === true ? (
+              <i className="fi fi-rs-check i-20" />
+            ) : (
+              <i className="fi fi-rs-settings-sliders i-20" />
+            )}
           </ButtonNeutral>
 
           {countriesFilterCount +

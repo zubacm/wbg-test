@@ -17,6 +17,7 @@ export default function PlaceInformationsDialogContent({
   shortDescription,
   feature,
   selectedLocations,
+  link
 }) {
   const t = useTranslations("general");
 
@@ -58,7 +59,7 @@ export default function PlaceInformationsDialogContent({
             {t("remove")}
           </ButtonNeutral>
         )}
-        <ButtonBasic size="small" className="" onClick={() => {}}>
+        <ButtonBasic size="small" className="" onClick={() => window.open(link, "_blank")}>
           <i className="fi fi-rs-info i-16" />
           &nbsp;
           {t("readMore")}

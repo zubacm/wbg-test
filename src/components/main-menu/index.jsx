@@ -12,6 +12,7 @@ export default function MainMenu({
   onSaveTour = () => {},
   canSaveTour = false,
   onGetNavigationUrl = () => {},
+  onSearchSelectPlace = () => {},
 }) {
   const languageModalRef = useRef();
   const openSavedTourModalRef = useRef();
@@ -19,7 +20,7 @@ export default function MainMenu({
 
   const onSearch = () => {
     searchRef?.current?.showModal();
-  }
+  };
 
   return (
     <>
@@ -49,7 +50,13 @@ export default function MainMenu({
         onOpenTour={onOpenTour}
       />
 
-      <SearchPlacesAndHashtags ref={searchRef}/>
+      <SearchPlacesAndHashtags
+        ref={searchRef}
+        onSelectPlace={(x) => {
+          onSearchSelectPlace(x);
+          searchRef?.current?.close();
+        }}
+      />
     </>
   );
 }

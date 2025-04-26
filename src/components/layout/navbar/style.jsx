@@ -7,10 +7,21 @@ import styled from "@emotion/styled";
 
 export const MobileWrapper = styled.div`
   display: none;
+  z-index: 2;
 
   @media (max-width: ${MEDIUM_SIZE_PX + "px"}) {
     display: block;
   }
+`;
+
+export const Backdrop = styled.div`
+  background-color: var(--gray-100);
+  opacity: 0.7;
+  position: absolute;
+  height: 100dvh;
+  width: 100dvw;
+  top: 0;
+  left: 0;
 `;
 
 export const NavbarWrapper = styled.div`
@@ -140,6 +151,7 @@ export const MobileMenuDrawerContent = styled.div`
   flex-direction: column;
   gap: 16px;
   padding: 16px 0;
+  z-index: 2;
 
   & .padded-div {
     padding: 0 20px;
@@ -156,7 +168,6 @@ export const MobileMenuDrawerContent = styled.div`
   & button {
     min-height: 32px;
   }
-
 
   & .menu-item {
     cursor: pointer;

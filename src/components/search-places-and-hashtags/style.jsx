@@ -1,3 +1,4 @@
+import { MEDIUM_SIZE_PX } from "@/lib/consts/style-consts";
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
@@ -20,6 +21,23 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     gap: 8px;
   }
+
+  & .input-wrapper {
+    padding-right: 4px !important;
+  }
+
+  & input {
+    flex: 1;
+    max-width: unset;
+  }
+
+  @media (max-width: ${MEDIUM_SIZE_PX + "px"}) {
+    width: unset;
+
+    & .header {
+      font-size: 14px;
+    }
+  }
 `;
 
 export const SearchPlacesContent = styled.div`
@@ -36,6 +54,10 @@ export const SearchPlacesItem = styled.div`
   align-items: center;
   gap: 8px;
   font-weight: 400;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 4px;
 
   & .bld {
     font-weight: 700;
@@ -47,6 +69,26 @@ export const SearchPlacesItem = styled.div`
     max-height: 36px;
     min-height: 36px;
     object-fit: cover;
-    border-radius: 16px;
+    border-radius: 4px;
+    overflow: hidden;
   }
+
+  & .name {
+    flex: 1;
+  }
+
+  & .arrow-icon {
+    display: flex;
+    color: var(--gray-20);
+  }
+
+  &:hover {
+    background-color: var(--gray-10);
+  }
+`;
+
+export const TagsSearchWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 `;

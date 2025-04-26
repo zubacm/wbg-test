@@ -30,7 +30,7 @@ export default function ShareButton(props) {
         <PopoverContentWrapper>
           <div>{text}</div>
           <ButtonTransparent
-            title="Copy to clipboard"
+            title={t("copyToClipboard")}
             size="small"
             onClick={() => {
               navigator.clipboard.writeText(text);

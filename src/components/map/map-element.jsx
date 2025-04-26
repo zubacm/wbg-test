@@ -19,8 +19,10 @@ const MapElement = ({
   media,
   onZoomPlace,
   isSelected,
-  onShowInfo
+  onShowInfo,
+  id,
 }) => {
+  const elementRef = useRef(null);
   const map = useMap();
   const { data } = usePlaceImage(media);
   const [hover, setHover] = useState(false);
@@ -50,7 +52,7 @@ const MapElement = ({
         center={center}
         eventHandlers={{
           click: (e) => {
-            console.log("KLIK", e);
+            // console.log("KLIK", e);
             onZoomPlace?.(e?.latlng);
             isActionRef.current = true;
             setHover(true);
@@ -72,6 +74,7 @@ const MapElement = ({
           fillColor: "transparent",
         }}
         radius={20}
+        // id={`map-element-${id}`}
       >
         <>
           <Tooltip permanent direction="top" offset={[0, 40]} opacity={1}>
@@ -83,6 +86,11 @@ const MapElement = ({
                 }
                 className="img-logo"
                 alt=""
+                id={`map-element-${id}`}
+                onClick={() => {
+                  isActionRef.current = true;
+                  setHover(true);
+                }}
               />
 
               {isDefined(selectedIndex) && (
@@ -151,7 +159,11 @@ const MapElement = ({
                       data?.media_details?.sizes?.thumbnail?.source_url
                     )
                   }
-                  onShowInfo={() => onShowInfo?.(data?.media_details?.sizes?.medium_large?.source_url)}
+                  onShowInfo={() =>
+                    onShowInfo?.(
+                      data?.media_details?.sizes?.medium_large?.source_url
+                    )
+                  }
                   thumbnail={data?.media_details?.sizes?.thumbnail?.source_url}
                   isSelected={isSelected}
                 />

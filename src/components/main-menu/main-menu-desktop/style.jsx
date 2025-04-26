@@ -79,6 +79,10 @@ export const SearchBarTxt = styled.div`
   background-color: var(--white);
   border-radius: 16px;
   box-shadow: var(--box-shadow);
+
+  & input {
+    flex: 1;
+  }
 `;
 
 export const SearchContainer = styled.div`

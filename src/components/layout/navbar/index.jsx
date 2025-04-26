@@ -34,6 +34,13 @@ export default function Navbar({
 
       <NavbarSection>
         {/* search */}
+        <ButtonBasic
+          className="menu-btn-desktop menu-btn-desktop-search"
+          // onClick={toggleExpand}
+          onClick={() => onSearch()}
+        >
+          <i className="fi-rs-search i-20" />
+        </ButtonBasic>
         <VerticalLine />
         {/* <ButtonBasic className="no-medium">{t("login")}</ButtonBasic> */}
         <MobileMenu

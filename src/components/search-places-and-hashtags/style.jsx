@@ -33,6 +33,8 @@ export const Wrapper = styled.div`
 
   @media (max-width: ${MEDIUM_SIZE_PX + "px"}) {
     width: unset;
+    min-width: calc(100dvw - 40px);
+    max-width: calc(100dvw - 40px);
 
     & .header {
       font-size: 14px;

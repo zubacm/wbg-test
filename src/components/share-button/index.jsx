@@ -12,11 +12,12 @@ export default function ShareButton(props) {
   const t = useTranslations("general");
 
   const [open, setOpen] = useState(false);
-  const [text, setText] = useState("test");
+  const [text, setText] = useState("");
 
   // Expose functions through ref
   useImperativeHandle(ref, () => ({
     toggle(text) {
+      console.log("NAV", text)
       setText(text);
       setOpen(!open);
     },

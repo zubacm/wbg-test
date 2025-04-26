@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePlacesByIds } from "../api/locations/queries";
 
 const useSelectedTour = () => {
@@ -18,10 +18,6 @@ const useSelectedTour = () => {
     setPlacesIds(tour?.acf.places || []);
   };
 
-
-  useEffect(() => {
-    console.log("places ids", placesIds)
-  }, [placesIds])
 
   const onChangeTourTitle = (value) => {
     setTourTitle(value || "");

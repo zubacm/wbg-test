@@ -125,6 +125,7 @@ export default function TourGuideSidebarMobile({
                     }}
                     showAll={showAll}
                     hideActions={true}
+                    onGetNavigationUrl={onGetNavigationUrl}
                   />
                 ) : (
                   <div className="light-text">
@@ -146,7 +147,7 @@ export default function TourGuideSidebarMobile({
                   selectedLocations={selectedLocations?.sort(
                     (a, b) => a?.displaySequence - b?.displaySequence
                   )}
-                  onSaveTour={() => onNewTour?.()}
+                  onSaveTour={() => onSaveTour?.()}
                   onClearAll={(e) => {
                     onClearAll?.();
                     setShowAll(false);
@@ -161,6 +162,7 @@ export default function TourGuideSidebarMobile({
                   }}
                   showAll={showAll}
                   onStartNavigation={onStartNavigation}
+                  onGetNavigationUrl={onGetNavigationUrl}
                 />
               </AccordionItem>
             </Accordion>

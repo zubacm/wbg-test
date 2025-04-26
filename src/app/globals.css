@@ -44,18 +44,17 @@
   --button-basic-txt-active: #0d2f2b;
 
   --button-transparent-bg: transparent;
-  --button-transparent-txt: #0D2F2B;
-  --button-transparent-bg-hover: #E7EBEA;
+  --button-transparent-txt: #0d2f2b;
+  --button-transparent-bg-hover: #e7ebea;
   --button-transparent-txt-hover: #0d2f2b;
-  --button-transparent-bg-active: #CFD5D5;
+  --button-transparent-bg-active: #cfd5d5;
   --button-transparent-txt-active: #0d2f2b;
-
 
   --foreground: #ededed;
 
   --gray-10: #e7ebea;
   --gray-20: #cfd5d5;
-  --gray-30: #B7C1C0;
+  --gray-30: #b7c1c0;
   --gray-40: #9eacaa;
   --gray-50: #859694;
   --gray-60: #6e8280;
@@ -106,18 +105,17 @@
     --button-basic-txt-active: #0d2f2b;
 
     --button-transparent-bg: transparent;
-    --button-transparent-txt: #0D2F2B;
-    --button-transparent-bg-hover: #E7EBEA;
+    --button-transparent-txt: #0d2f2b;
+    --button-transparent-bg-hover: #e7ebea;
     --button-transparent-txt-hover: #0d2f2b;
-    --button-transparent-bg-active: #CFD5D5;
+    --button-transparent-bg-active: #cfd5d5;
     --button-transparent-txt-active: #0d2f2b;
-
 
     --foreground: #ededed;
 
     --gray-10: #e7ebea;
     --gray-20: #cfd5d5;
-    --gray-30: #B7C1C0;
+    --gray-30: #b7c1c0;
     --gray-40: #9eacaa;
     --gray-50: #859694;
     --gray-60: #6e8280;
@@ -354,11 +352,11 @@ dialog {
   z-index: 999;
   border-radius: 16px;
 
-  box-shadow: 0px 0px 20px 0px #0D2F2B33;
+  box-shadow: 0px 0px 20px 0px #0d2f2b33;
 }
 
 .search-dialog {
-  
+  margin-top: 10px; /* `margin: auto;` is the default. */
 }
 
 .cover-full-div {
@@ -368,7 +366,7 @@ dialog {
   top: 0;
   bottom: 0;
   z-index: 999;
-  background-color: #E7EBEA4D;
+  background-color: #e7ebea4d;
 }
 
 i {

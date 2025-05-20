@@ -17,6 +17,8 @@ export const Wrapper = styled.div`
   gap: 8px;
   z-index: 499;
   max-height: calc(100dvh - 70px);
+  overflow-y: auto;
+  z-index: 998;
 
   & .light-text {
     color: var(--gray-50);

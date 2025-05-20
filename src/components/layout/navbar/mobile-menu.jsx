@@ -2,22 +2,20 @@
 
 import ButtonBasic from "@/components/buttons/button-basic";
 import ButtonNeutral from "@/components/buttons/button-neutral";
-import {
-  Backdrop,
-  MobileMenuDrawerContent,
-  MobileNavigationWrapper,
-  MobileWrapper,
-} from "./style";
+import { MobileMenuDrawerContent, MobileWrapper } from "./style";
 import { useTranslations } from "next-intl";
-import { Drawer, DrawerContent, useDisclosure } from "@nextui-org/react";
+import { Drawer, DrawerContent } from "@nextui-org/react";
 import HorizontalLine from "@/components/horizontal-line";
 import MobileMenuFooter from "./mobile-menu-footer";
 import { MenuItem } from "@/components/main-menu/main-menu-desktop/style";
 import ShareButton from "@/components/share-button";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useVerticalSwipe } from "@/app/hooks/useSwipeDirection";
+import ShareToDialog from "@/components/share-to-dialog";
 
 export default function MobileMenu({
+  ref,
   onSaveTour = () => {},
   onShareTour = () => {},
   onExitTourBuilder = () => {},
@@ -28,14 +26,23 @@ export default function MobileMenu({
 }) {
   const t = useTranslations("general");
   const shareButtonRef = useRef();
-  // const generalTranslation = useTranslations("general");
   const [open, setOpen] = useState(false);
   // const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
+  const swipeHandlers = useVerticalSwipe(
+    () => setOpen(false),
+    () => {}
+  );
+
+  const handleWindowClick = (e) => {
+    if (open === true && e?.target?.classList?.contains("w-screen"))
+      setOpen(false);
+  };
+
   return (
     <>
-      <MobileWrapper className="sis">
-        <div className="sfsf">
+      <MobileWrapper onClick={handleWindowClick}>
+        <div>
           <ButtonBasic
             onClick={(e) => {
               setOpen(!open);
@@ -57,23 +64,14 @@ export default function MobileMenu({
           // onOpenChange={onOpenChange}
           placement="top"
         >
-          <DrawerContent>
+          <DrawerContent {...swipeHandlers}>
             {(onClose) => (
               <>
                 {/* <DrawerHeader className="flex flex-col gap-1">
                 Drawer Title
               </DrawerHeader> */}
                 {/* <DrawerBody> */}
-                <MobileMenuDrawerContent>
-                  {/* {open === true &&
-                    createPortal(
-                      <Backdrop
-                        className="back"
-                        onClick={() => setOpen(false)}
-                      />,
-                      document.body
-                    )} */}
-
+                <MobileMenuDrawerContent className="mobile-menu-drawer-content">
                   <div className="padded-div">
                     <ButtonNeutral className="login-btn" center={true}>
                       {t("login")}
@@ -94,19 +92,19 @@ export default function MobileMenu({
                       </MenuItem>
                     )}
 
-                    <ShareButton ref={shareButtonRef}>
-                      <MenuItem
-                        className="menu-item"
-                        onClick={() => {
-                          const tourPath = onGetNavigationUrl();
+                    {/* <ShareButton ref={shareButtonRef}> */}
+                    <MenuItem
+                      className="menu-item"
+                      onClick={() => {
+                        const tourPath = onGetNavigationUrl();
 
-                          shareButtonRef?.current?.toggle(tourPath);
-                        }}
-                      >
-                        <i className="fi-rs-share i-16" />
-                        <div>{t("shareTour")}</div>
-                      </MenuItem>
-                    </ShareButton>
+                        shareButtonRef?.current?.open(tourPath);
+                      }}
+                    >
+                      <i className="fi-rs-share i-16" />
+                      <div>{t("shareTour")}</div>
+                    </MenuItem>
+                    {/* </ShareButton> */}
 
                     <MenuItem
                       className="menu-item"
@@ -139,6 +137,7 @@ export default function MobileMenu({
                   </div>
                   <MobileMenuFooter />
                 </MobileMenuDrawerContent>
+                <ShareToDialog ref={shareButtonRef} />
 
                 {/* </DrawerBody> */}
                 {/* <DrawerFooter>og</DrawerFooter> */}

@@ -18,10 +18,6 @@ export const Languages = [
     img: "/hr.svg",
   },
   {
-    code: "mk",
-    img: "/mk.svg",
-  },
-  {
     code: "mn",
     img: "/mn.svg",
   },

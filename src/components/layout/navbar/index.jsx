@@ -14,12 +14,13 @@ export default function Navbar({
   onOpenSavedTours,
   canSaveTour = false,
   onGetNavigationUrl,
-  onSearch
+  onSearch,
 }) {
   const t = useTranslations("general");
 
+
   return (
-    <NavbarWrapper>
+    <NavbarWrapper >
       <MainTab>
         <Image
           src="/Vector.svg"

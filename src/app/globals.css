@@ -325,6 +325,11 @@ button:focus {
   background-color: transparent !important;
 }
 
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 997 !important;
+}
+
 /*******************************************************************************************/
 
 .i-20 {
@@ -359,6 +364,12 @@ dialog {
   margin-top: 10px; /* `margin: auto;` is the default. */
 }
 
+@media screen and (max-width: 1350px) {
+  .save-tour-dialog {
+    margin-top: 10px; /* `margin: auto;` is the default. */
+  }
+}
+
 .cover-full-div {
   width: 100dvw;
   height: 100dvh;
@@ -389,4 +400,8 @@ i {
 
 .react-tiny-popover-container {
   z-index: 9999;
+}
+
+.leaflet-control-attribution {
+  display: none;
 }

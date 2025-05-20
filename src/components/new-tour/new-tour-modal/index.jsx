@@ -2,12 +2,11 @@
 "use client";
 
 /* eslint-disable react/jsx-key */
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import NewTourModalContent from "./content";
 import { useAddTour, useEditTour } from "@/app/api/tours/commands";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import { isDefined } from "@/lib/util";
 
 const NewTourModal = forwardRef(
   ({ tourName, id, isEdit = false, places }, ref) => {
@@ -61,7 +60,7 @@ const NewTourModal = forwardRef(
 
     return (
       <>
-        <dialog ref={dialogRef}>
+        <dialog ref={dialogRef} className="save-tour-dialog">
           <NewTourModalContent
             key={`tour__modal__${tourName}`}
             tourName={tourName}

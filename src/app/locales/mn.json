@@ -61,8 +61,10 @@
         "tourSuccessfullySaved": "Tura uspješno sačuvana!",
         "errorOccured": "Došlo je do greške!",
         "copyToClipboard": "Kopiraj link",
+        "copiedToClipboard": "Kopirano!",
         "searchPlacesAndHashtags": "Pretraži mjesta i hashtagove",
-        "enterPlaceOrHashtag": "Unesi ime ili hashtag"
+        "enterPlaceOrHashtag": "Unesi ime ili hashtag",
+        "shareThisTour": "Podijeli ovu turu"
     },
     "languages": {
         "chooseLanguage": "Izaberite jezik",

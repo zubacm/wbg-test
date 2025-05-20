@@ -8,8 +8,8 @@ import {
   MobileNavigationFooterWrapper,
   MobileSelectLanguagesWrapper,
 } from "./style";
-import { useTranslations } from "next-intl";
-import React, { Fragment, startTransition, useRef, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import React, { Fragment, startTransition, useEffect, useRef, useState } from "react";
 import { DefaultLanguageKey, Languages } from "@/lib/consts/language";
 import { isDefined } from "@/lib/util";
 import { Accordion } from "@nextui-org/accordion";
@@ -20,9 +20,10 @@ import { setUserLocale } from "@/services/locale";
 
 export default function MobileMenuFooter() {
   const t = useTranslations("languages");
+  const locale = useLocale()
 
   const [selectedKeys, setSelectedKeys] = useState(
-    new Set([DefaultLanguageKey])
+    new Set([locale || DefaultLanguageKey])
   );
 
   const [selectedKeysAccordion, setSelectedKeysAccordion] =
@@ -53,9 +54,10 @@ export default function MobileMenuFooter() {
           }}
         >
           <Image src="/planet.svg" width="16" height="16" alt="" />
-          {isDefined(Object.entries(selectedKeys)?.at(1)?.at(1))
+          {/* {isDefined(Object.entries(selectedKeys)?.at(1)?.at(1))
             ? t(Object.entries(selectedKeys)?.at(1)?.at(1))
-            : t(DefaultLanguageKey)}
+            : t(DefaultLanguageKey)} */}
+            {t(locale)}
           <Image
             src="/carousel.svg"
             className="carousel-svg"
@@ -94,7 +96,7 @@ export default function MobileMenuFooter() {
           <LanguagesMobileWrap>
             {Languages?.map((lan) => (
               <Fragment key={`lang1__${lan?.code}`}>
-                {Object.entries(selectedKeys)?.at(1)?.at(1) === lan.code ? (
+                {locale === lan.code ? (
                   <ButtonNeutral key={lan?.code}>
                     <LanguageItem>
                       <Image src={lan?.img} width="20" height="20" alt="" />

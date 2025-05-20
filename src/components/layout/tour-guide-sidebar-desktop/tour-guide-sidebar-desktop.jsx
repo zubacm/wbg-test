@@ -27,6 +27,7 @@ export default function TourGuideSidebarDesktop({
   onChangeTourTitle,
   tourName,
   onGetNavigationUrl,
+  onStartNavigation = () => {},
 }) {
   const t = useTranslations("general");
 
@@ -59,6 +60,7 @@ export default function TourGuideSidebarDesktop({
             onSwap={onSwap}
             onRemoveLocation={onRemoveLocation}
             onGetNavigationUrl={onGetNavigationUrl}
+            onStartNavigation={onStartNavigation}
           />
         ) : (
           <div className="light-text">{t("selectLocationsFromTheMap")}</div>

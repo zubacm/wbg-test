@@ -37,8 +37,8 @@ const PlacesPolylines = forwardRef((props, ref) => {
         lineCap="round"
         lineJoin="round"
         stroke={true}
-        weight={3}
-        dashArray={[12, 12]}
+        weight={1}
+        // dashArray={[10, 12]}
       />
     </>
   );

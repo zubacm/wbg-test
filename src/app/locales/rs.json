@@ -18,7 +18,7 @@
         "macedonia": "Makedonija",
         "croatia": "Hrvatska",
         "serbia": "Srbija",
-        "placesAndEvents": "Mjesta i događaji",
+        "placesAndEvents": "Mesta i događaji",
         "contact": "Kontakt",
         "findUsOn": "Pronađi nas",
         "facebook": "Facebook",
@@ -58,11 +58,13 @@
         "chooseTourToOpen": "Izaberi turu za otvaranje",
         "openSavedTour": "Otvori sačuvanu turu",
         "shareTour": "Podeli turu",
-        "tourSuccessfullySaved": "Tura uspješno sačuvana!",
+        "tourSuccessfullySaved": "Tura uspešno sačuvana!",
         "errorOccured": "Došlo je do greške!",
         "copyToClipboard": "Kopiraj link",
-        "searchPlacesAndHashtags": "Pretraži mjesta i hashtagove",
-        "enterPlaceOrHashtag": "Unesi ime ili hashtag"
+        "copiedToClipboard": "Kopirano!",
+        "searchPlacesAndHashtags": "Pretraži mesta i hashtagove",
+        "enterPlaceOrHashtag": "Unesi ime ili hashtag",
+        "shareThisTour": "Podeli ovu turu"
     },
     "languages": {
         "chooseLanguage": "Izaberite jezik",

@@ -12,8 +12,6 @@ const NewTourItemModal = forwardRef((props, ref) => {
   // Expose functions through ref
   useImperativeHandle(ref, () => ({
     open() {
-        console.log("open dialog")
-      // setIsOpen(true);
       dialogRef?.current?.showModal();
     },
     close() {

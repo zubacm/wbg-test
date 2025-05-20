@@ -7,8 +7,8 @@ import { createSwapy } from "swapy";
 import { ActionsContainer, DndContainer, ExternalContainer } from "./style";
 import ButtonBasic from "../buttons/button-basic";
 import ButtonNeutral from "../buttons/button-neutral";
-import { Popover } from "react-tiny-popover";
 import ShareButton from "../share-button";
+import ShareToDialog from "../share-to-dialog";
 
 const DEFAULT = {
   1: "a",
@@ -104,18 +104,19 @@ export default function TourItemsDnd(props) {
               {t("save")}
             </ButtonBasic>
 
-            <ShareButton ref={shareButtonRef}>
+            {/* <ShareButton ref={shareButtonRef}> */}
               <ButtonBasic
                 onClick={() => {
                   const tourPath = onGetNavigationUrl();
 
-                  shareButtonRef?.current?.toggle(tourPath);
+                  shareButtonRef?.current?.open(tourPath);
                 }}
               >
                 <i className="fi fi-rs-share i-16" />
                 {t("share")}
               </ButtonBasic>
-            </ShareButton>
+            {/* </ShareButton> */}
+            <ShareToDialog ref={shareButtonRef} />
             <ButtonBasic onClick={() => onClearAll?.()}>
               <i className="fi fi-rs-cross i-16" />
 

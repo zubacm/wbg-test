@@ -2,7 +2,7 @@
 import { FormField, ModalHeaderBar, Wrapper } from "./style";
 import { useTranslations } from "next-intl";
 import TextInput from "@/components/text-input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ButtonSecondary from "@/components/buttons/button-secondary";
 import { ClipLoader } from "react-spinners";
 import ButtonTransparent from "@/components/buttons/button-transparent";
@@ -16,10 +16,6 @@ export default function NewTourModalContent({
   const t = useTranslations("general");
 
   const [tourNameInput, setTourNameInput] = useState(tourName);
-
-  useEffect(() => {
-    console.log("tourname", tourName)
-  }, [tourName])
 
   return (
     <Wrapper>

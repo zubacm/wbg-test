@@ -3,7 +3,6 @@
 import { Header, SliderUpDown, Wrapper } from "./style";
 import { useTranslations } from "next-intl";
 import FiltersContent from "@/components/filters/filters-content";
-import HorizontalLine from "@/components/horizontal-line";
 import TourItemsDnd from "@/components/tour-items-dnd";
 import { ChipWrapper } from "@/app/style";
 import { useSearchParams } from "next/navigation";
@@ -14,9 +13,12 @@ import {
   TYPES_FILTER_NAME,
 } from "@/lib/consts/style-consts";
 import ButtonNeutral from "@/components/buttons/button-neutral";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { EditableTourName } from "@/components/editable-tour-name";
+import useSwipeDirection, {
+  SwipeDirection,
+} from "@/app/hooks/useSwipeDirection";
 
 const LIMIT_LOCATIONS_SHOWN = 2;
 
@@ -32,8 +34,23 @@ export default function TourGuideSidebarMobile({
   onStartNavigation = () => {},
   onGetNavigationUrl,
 }) {
-  const t = useTranslations("general");
+  const wrapperRef = useRef();
   const [showAll, setShowAll] = useState(false);
+  const swipeDetect = useSwipeDirection(wrapperRef);
+
+  useEffect(() => {
+    if (swipeDetect?.direction === SwipeDirection.UP) {
+      if (selectedLocations?.length > 0) {
+        onToggleShowAll?.();
+        setShowAll(true);
+      }
+    } else if (swipeDetect?.direction === SwipeDirection.DOWN) {
+      setShowAll(false);
+      setShowFilters(false);
+    }
+  }, [swipeDetect]);
+
+  const t = useTranslations("general");
   const [showFilters, setShowFilters] = useState(false);
 
   const searchParams = useSearchParams();
@@ -48,7 +65,7 @@ export default function TourGuideSidebarMobile({
 
   return (
     <>
-      <Wrapper>
+      <Wrapper ref={wrapperRef}>
         <SliderUpDown
           className="draw-up-down-div"
           onClick={() => {
@@ -125,6 +142,7 @@ export default function TourGuideSidebarMobile({
                     }}
                     showAll={showAll}
                     hideActions={true}
+                    onStartNavigation={onStartNavigation}
                     onGetNavigationUrl={onGetNavigationUrl}
                   />
                 ) : (

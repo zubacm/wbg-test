@@ -64,7 +64,9 @@
         "copiedToClipboard": "Kopirano!",
         "searchPlacesAndHashtags": "Pretraži mjesta i hashtagove",
         "enterPlaceOrHashtag": "Unesi ime ili hashtag",
-        "shareThisTour": "Podijeli ovu turu"
+        "shareThisTour": "Podijeli ovu turu",
+        "showOnlyPlacesFromRoute": "Prikaži samo mjesta sa rute",
+        "showAllPlaces": "Prikaži sva mjesta"
     },
     "languages": {
         "chooseLanguage": "Izaberite jezik",

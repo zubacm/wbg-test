@@ -35,6 +35,7 @@ const MapLocations = ({
   const typesFilter = searchParams?.get(TYPES_FILTER_NAME)?.split(",");
   const hashtFilter = searchParams?.get(HASHTAGS_FILTER_NAME)?.split(",");
 
+  const [showOnlySelected, setShowOnlySelected] = useState(false);
   const { data, isLoading } = usePlaces({
     countries: countriesFilter,
     features: featFilter,
@@ -45,6 +46,8 @@ const MapLocations = ({
   const map = useMap();
 
   const uniquePlaces = useMemo(() => {
+    if (showOnlySelected === true) return selectedLocations;
+
     let result = unionBy(data || [], selectedLocations || [], "id");
 
     // const arr2 = Object.fromEntries(
@@ -58,15 +61,15 @@ const MapLocations = ({
     //   .values();
 
     return result;
-  }, [data, selectedLocations]);
+  }, [data, selectedLocations, showOnlySelected]);
 
   // Expose functions through ref
   useImperativeHandle(ref, () => ({
     addSearchedPlace(newPlace) {
       if (uniquePlaces?.some((x) => x?.id === newPlace?.id)) {
         map.setView([
-          newPlace?.acf?.location?.lat,
-          newPlace?.acf?.location?.lng,
+          +newPlace?.acf?.location?.lat,
+          +newPlace?.acf?.location?.lng,
         ]);
         document.getElementById(`map-element-${newPlace?.id}`)?.click();
       } else {
@@ -76,6 +79,9 @@ const MapLocations = ({
           newPlace?.acf?.location?.lng,
         ]);
       }
+    },
+    toggleShowOnlySelectedLocations() {
+      setShowOnlySelected(!showOnlySelected);
     },
   }));
 
@@ -90,14 +96,15 @@ const MapLocations = ({
           media={x?.featured_media}
           center={[x?.acf?.location?.lat, x?.acf?.location?.lng]}
           selectedIndex={selectedIndex}
-          name={x?.acf?.location?.name}
+          // name={x?.acf?.location?.name}
+          name={x?.title?.rendered}
           onSelect={(thumbnail) =>
             onSelectPlace?.({
               id: x?.id,
               thumbnail: thumbnail,
               countryShort: x?.acf?.location?.country_short,
               city: x?.acf?.location?.city,
-              name: x?.acf?.location?.name,
+              name: x?.title?.rendered,
               lat: x?.acf?.location?.lat,
               lng: x?.acf?.location?.lng,
               shortDescription: x?.acf?.short_description,
@@ -105,8 +112,12 @@ const MapLocations = ({
             })
           }
           onZoomPlace={() => {
-            map.setView([x?.acf?.location?.lat, x?.acf?.location?.lng]);
-            // map.setZoom(20);
+            // console.log("xxx", x)
+            map.setView([+x?.acf?.location?.lat, +x?.acf?.location?.lng]);
+            // map.setZoom(12);
+            setTimeout(() => {
+              map.setZoom(15);
+            }, [500])
           }}
           isSelected={selectedLocations?.some((y) => y?.id === x?.id)}
           onShowInfo={(thumbnail) =>
@@ -116,7 +127,7 @@ const MapLocations = ({
               thumbnail: thumbnail,
               countryShort: x?.acf?.location?.country_short,
               city: x?.acf?.location?.city,
-              name: x?.acf?.location?.name,
+              name: x?.title?.rendered,
               lat: x?.acf?.location?.lat,
               lng: x?.acf?.location?.lng,
               shortDescription: x?.acf?.short_description,
@@ -137,14 +148,14 @@ const MapLocations = ({
             searchedPlace?.acf?.location?.lng,
           ]}
           selectedIndex={selectedIndex}
-          name={searchedPlace?.acf?.location?.name}
+          name={searchedPlace?.title?.rendered}
           onSelect={(thumbnail) =>
             onSelectPlace?.({
               id: searchedPlace?.id,
               thumbnail: thumbnail,
               countryShort: searchedPlace?.acf?.location?.country_short,
               city: searchedPlace?.acf?.location?.city,
-              name: searchedPlace?.acf?.location?.name,
+              name: searchedPlace?.title?.rendered,
               lat: searchedPlace?.acf?.location?.lat,
               lng: searchedPlace?.acf?.location?.lng,
               shortDescription: searchedPlace?.acf?.short_description,
@@ -165,7 +176,7 @@ const MapLocations = ({
               thumbnail: thumbnail,
               countryShort: searchedPlace?.acf?.location?.country_short,
               city: searchedPlace?.acf?.location?.city,
-              name: searchedPlace?.acf?.location?.name,
+              name: searchedPlace?.title?.rendered,
               lat: searchedPlace?.acf?.location?.lat,
               lng: searchedPlace?.acf?.location?.lng,
               shortDescription: searchedPlace?.acf?.short_description,

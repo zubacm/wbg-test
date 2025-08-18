@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import api from "../../api";
 
 const getMedia = async (media) => {
+  if (media === 0) return null;
+
   const { data } = await api.get(
     `/media/${media}?_fields[]=id&_fields[]=media_details`
   );

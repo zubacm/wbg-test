@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import ButtonTransparent from "../buttons/button-transparent";
 import { usePlaceImage } from "@/app/api/locations/queries";
+import useDetectSmallScreen from "@/app/hooks/use-detect-small-screen";
 
 export default function TourItem({
   id,
@@ -20,10 +21,26 @@ export default function TourItem({
   const t = useTranslations("general");
   const { data } = usePlaceImage(featuredMedia);
 
+  const isSmallScreen = useDetectSmallScreen();
+
   return (
     <Wrapper>
-      <div className="chevron-icons">
-        <i className="fi fi-rs-sort" />
+      {/* {isSmallScreen === true ? (
+        <div data-swapy-handle>
+          <div className="chevron-icons">
+            <i className="fi fi-rs-sort handle-mobile" />
+          </div>
+        </div>
+      ) : (
+        <div className="chevron-icons">
+          <i className="fi fi-rs-sort" />
+        </div>
+      )} */}
+
+      <div data-swapy-handle>
+        <div className="chevron-icons mobile-swapy-handle">
+          <i className="fi fi-rs-sort" />
+        </div>
       </div>
       <Image
         src={

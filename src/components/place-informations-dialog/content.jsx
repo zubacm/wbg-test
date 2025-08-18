@@ -1,11 +1,12 @@
 "use client";
 import Image from "next/image";
-import { FooterWrapper, HeadWrapper, Wrapper } from "./style";
+import { FooterWrapper, HeadWrapper, TimesBtnWrapper, Wrapper } from "./style";
 import { useTranslations } from "next-intl";
 import ButtonBasic from "../buttons/button-basic";
 import ButtonNeutral from "../buttons/button-neutral";
 import ButtonSecondary from "../buttons/button-secondary";
 import PlaceFeatures from "./place-features";
+import ButtonTransparent from "../buttons/button-transparent";
 
 export default function PlaceInformationsDialogContent({
   id,
@@ -17,12 +18,19 @@ export default function PlaceInformationsDialogContent({
   shortDescription,
   feature,
   selectedLocations,
-  link
+  link,
+  onClose = () => {},
 }) {
   const t = useTranslations("general");
 
   return (
     <Wrapper>
+      <TimesBtnWrapper>
+        <ButtonTransparent size="small" onClick={onClose}>
+          <i className="fi fi-rs-cross i-16" />
+        </ButtonTransparent>
+      </TimesBtnWrapper>
+
       <Image
         className="head-img"
         src={thumbnail || "/Vector.svg"}
@@ -59,7 +67,11 @@ export default function PlaceInformationsDialogContent({
             {t("remove")}
           </ButtonNeutral>
         )}
-        <ButtonBasic size="small" className="" onClick={() => window.open(link, "_blank")}>
+        <ButtonBasic
+          size="small"
+          className=""
+          onClick={() => window.open(link, "_blank")}
+        >
           <i className="fi fi-rs-info i-16" />
           &nbsp;
           {t("readMore")}

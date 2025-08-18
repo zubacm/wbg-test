@@ -78,7 +78,7 @@ export const FooterWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  
+
   & button {
     max-height: 36px;
     min-height: 36px;
@@ -131,7 +131,9 @@ export const HeadWrapper = styled.div`
 `;
 
 export const TimesBtnWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   right: 36px;
   top: 36px;
+  background-color: #14161a14 !important;
+  border-radius: 8px;
 `;

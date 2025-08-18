@@ -60,7 +60,7 @@ const ShareToDialog = forwardRef(({}, ref) => {
 
           <DialogContent>
             <ShareOption onClick={handleCopyToClipboard}>
-              <i class="fi fi-rs-clip" />
+              <i className="fi fi-rs-clip" />
               <span>{t("copyToClipboard")}</span>
             </ShareOption>
             {ExternalShareItems?.map((item, index) => (

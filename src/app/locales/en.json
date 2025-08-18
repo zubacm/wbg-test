@@ -64,7 +64,9 @@
         "copiedToClipboard": "Copied to clipboard!",
         "searchPlacesAndHashtags": "Search places and hashtags",
         "enterPlaceOrHashtag": "Enter place or hashtag",
-        "shareThisTour": "Share this tour"
+        "shareThisTour": "Share this tour",
+        "showOnlyPlacesFromRoute": "Show only places from route",
+        "showAllPlaces": "Show all places"
     },
     "languages": {
         "chooseLanguage": "Choose language",

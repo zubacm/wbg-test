@@ -18,6 +18,7 @@ import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { EditableTourName } from "@/components/editable-tour-name";
 import useSwipeDirection, {
   SwipeDirection,
+  useVerticalSwipe,
 } from "@/app/hooks/useSwipeDirection";
 
 const LIMIT_LOCATIONS_SHOWN = 2;
@@ -33,22 +34,40 @@ export default function TourGuideSidebarMobile({
   tourName,
   onStartNavigation = () => {},
   onGetNavigationUrl,
+  onToggleShowOnlySelected = () => {},
 }) {
-  const wrapperRef = useRef();
   const [showAll, setShowAll] = useState(false);
-  const swipeDetect = useSwipeDirection(wrapperRef);
+  const [showSelected, setShowSelected] = useState(false);
 
-  useEffect(() => {
-    if (swipeDetect?.direction === SwipeDirection.UP) {
-      if (selectedLocations?.length > 0) {
-        onToggleShowAll?.();
-        setShowAll(true);
-      }
-    } else if (swipeDetect?.direction === SwipeDirection.DOWN) {
-      setShowAll(false);
-      setShowFilters(false);
+  const handleShowAll = () => {
+    setShowSelected(!showSelected);
+    onToggleShowOnlySelected();
+  }
+
+  const handleSwipeUp = () => {
+    if (selectedLocations?.length > 0) {
+      onToggleShowAll?.();
+      setShowAll(true);
     }
-  }, [swipeDetect]);
+  };
+
+  const handleSwipeDown = () => {
+    setShowAll(false);
+    setShowFilters(false);
+  };
+  const swipeHandlers = useVerticalSwipe(handleSwipeUp, handleSwipeDown);
+
+  // useEffect(() => {
+  //   if (swipeDetect?.direction === SwipeDirection.UP) {
+  //     if (selectedLocations?.length > 0) {
+  //       onToggleShowAll?.();
+  //       setShowAll(true);
+  //     }
+  //   } else if (swipeDetect?.direction === SwipeDirection.DOWN) {
+  //     setShowAll(false);
+  //     setShowFilters(false);
+  //   }
+  // }, [swipeDetect]);
 
   const t = useTranslations("general");
   const [showFilters, setShowFilters] = useState(false);
@@ -65,7 +84,7 @@ export default function TourGuideSidebarMobile({
 
   return (
     <>
-      <Wrapper ref={wrapperRef}>
+      <Wrapper>
         <SliderUpDown
           className="draw-up-down-div"
           onClick={() => {
@@ -76,6 +95,7 @@ export default function TourGuideSidebarMobile({
             }
           }}
           isOpen={showAll}
+          {...swipeHandlers}
         >
           {selectedLocations?.length > 0 && (
             <>
@@ -83,7 +103,7 @@ export default function TourGuideSidebarMobile({
             </>
           )}
         </SliderUpDown>
-        <Header>
+        <Header {...swipeHandlers}>
           <EditableTourName
             key={`tour__name__${tourName}`}
             tourName={tourName}
@@ -117,6 +137,15 @@ export default function TourGuideSidebarMobile({
           )}
         </Header>
 
+        {selectedLocations?.length > 0 && (
+          <ButtonNeutral size="small" onClick={handleShowAll}>
+            <i className="fi fi-rs-eye i-16" />
+            &nbsp;
+            {showSelected === true
+              ? t("showAllPlaces")
+              : t("showOnlyPlacesFromRoute")}
+          </ButtonNeutral>
+        )}
         {showFilters !== true && (
           <>
             {showAll !== true && (
@@ -195,7 +224,9 @@ export default function TourGuideSidebarMobile({
           className="accordion-items"
         >
           <AccordionItem className="accordion-item-wbg" key="filters-content">
-            <FiltersContent />
+            <div {...swipeHandlers}>
+              <FiltersContent />
+            </div>
           </AccordionItem>
         </Accordion>
       </Wrapper>

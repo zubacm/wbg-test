@@ -28,6 +28,7 @@ export default function TourGuideSidebarDesktop({
   tourName,
   onGetNavigationUrl,
   onStartNavigation = () => {},
+  onToggleShowOnlySelected = () => {},
 }) {
   const t = useTranslations("general");
 
@@ -44,7 +45,10 @@ export default function TourGuideSidebarDesktop({
   return (
     <>
       <Wrapper>
-        <TourGuideSidebarHeader />
+        <TourGuideSidebarHeader
+          hasSelectedLocations={selectedLocations?.length > 0}
+          onToggleShowOnlySelected={onToggleShowOnlySelected}
+        />
         <EditableTourName
           key={`tour__name__${tourName}`}
           tourName={tourName}

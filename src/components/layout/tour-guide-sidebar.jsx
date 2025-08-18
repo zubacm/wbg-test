@@ -15,6 +15,7 @@ export default function TourGuideSidebar({
   onStartNavigation,
   onChangeTourTitle,
   onGetNavigationUrl,
+  onToggleShowOnlySelected = () => {},
 }) {
   const isSmallScreen = useIsSmallScreen();
 
@@ -34,6 +35,7 @@ export default function TourGuideSidebar({
             onStartNavigation={onStartNavigation}
             onChangeTourTitle={onChangeTourTitle}
             onGetNavigationUrl={onGetNavigationUrl}
+            onToggleShowOnlySelected={onToggleShowOnlySelected}
           />
         ) : (
           <TourGuideSidebarDesktop
@@ -46,6 +48,7 @@ export default function TourGuideSidebar({
             onStartNavigation={onStartNavigation}
             onChangeTourTitle={onChangeTourTitle}
             onGetNavigationUrl={onGetNavigationUrl}
+            onToggleShowOnlySelected={onToggleShowOnlySelected}
           />
         )}
       </Suspense>

@@ -18,10 +18,13 @@ export default function Navbar({
 }) {
   const t = useTranslations("general");
 
+  const handleNavigate = () => {
+    window.open(`https://westbalkanguide.com/`, "_blank");
+  };
 
   return (
-    <NavbarWrapper >
-      <MainTab>
+    <NavbarWrapper>
+      <MainTab onClick={handleNavigate}>
         <Image
           src="/Vector.svg"
           width="32"

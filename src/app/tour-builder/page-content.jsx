@@ -9,11 +9,14 @@ import useSelectedTour from "../hooks/useSelectedTour";
 import TourGuideSidebarDesktop from "@/components/layout/tour-guide-sidebar-desktop/tour-guide-sidebar-desktop";
 import TourGuideSidebar from "@/components/layout/tour-guide-sidebar";
 import { ToastContainer } from "react-toastify";
+import { useToken } from "../api/auth/queries";
 // import TourGuideSidebar from "@/components/layout/tour-guide-sidebar";
 
 export default function TourBuilderContent() {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const selectedLocationsRef = useRef([]);
+
+  // const { data: token } = useToken();
 
   const {
     tour,
@@ -35,7 +38,7 @@ export default function TourBuilderContent() {
           countryShort: x?.acf?.location?.country_short,
           lat: x?.acf?.location?.lat,
           lng: x?.acf?.location?.lng,
-          name: x?.acf?.location?.name,
+          name: x?.acf?.location?.address,
           displaySequence: index,
           // thumbnail:
           featuredMedia: x?.featured_media,
@@ -197,6 +200,9 @@ export default function TourBuilderContent() {
             onSearchSelectPlace={(x) => {
               mapLocationsRef?.current?.addSearchedPlace(x);
             }}
+            onToggleShowOnlySelected={() =>
+              mapLocationsRef?.current?.toggleShowOnlySelectedLocations()
+            }
           />
         </Suspense>
 
@@ -217,6 +223,9 @@ export default function TourBuilderContent() {
             onStartNavigation={handleStartNavigation}
             onChangeTourTitle={onChangeTourTitle}
             onGetNavigationUrl={getNavigationUrl}
+            onToggleShowOnlySelected={() =>
+              mapLocationsRef?.current?.toggleShowOnlySelectedLocations()
+            }
           />
         </Suspense>
         <Suspense>

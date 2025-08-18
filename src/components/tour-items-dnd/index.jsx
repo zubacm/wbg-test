@@ -51,17 +51,23 @@ export default function TourItemsDnd(props) {
     (a, v, index) => ({
       ...a,
       [v?.id]: (
-        <TourItem
-          id={v?.id}
-          thumbnail={v?.thumbnail}
-          name={v?.name}
-          city={v?.city}
-          countryShort={v?.countryShort}
-          displaySequence={v?.displaySequence}
-          index={index}
-          onRemoveLocation={onRemoveLocation}
-          featuredMedia={v?.featuredMedia}
-        />
+        <>
+          {/* <div
+            data-swapy-handle
+            style={{ height: "45px", width: "70px", background: "red" }}
+          ></div> */}
+          <TourItem
+            id={v?.id}
+            thumbnail={v?.thumbnail}
+            name={v?.name}
+            city={v?.city}
+            countryShort={v?.countryShort}
+            displaySequence={v?.displaySequence}
+            index={index}
+            onRemoveLocation={onRemoveLocation}
+            featuredMedia={v?.featuredMedia}
+          />
+        </>
       ),
     }),
     {}
@@ -105,16 +111,16 @@ export default function TourItemsDnd(props) {
             </ButtonBasic>
 
             {/* <ShareButton ref={shareButtonRef}> */}
-              <ButtonBasic
-                onClick={() => {
-                  const tourPath = onGetNavigationUrl();
+            <ButtonBasic
+              onClick={() => {
+                const tourPath = onGetNavigationUrl();
 
-                  shareButtonRef?.current?.open(tourPath);
-                }}
-              >
-                <i className="fi fi-rs-share i-16" />
-                {t("share")}
-              </ButtonBasic>
+                shareButtonRef?.current?.open(tourPath);
+              }}
+            >
+              <i className="fi fi-rs-share i-16" />
+              {t("share")}
+            </ButtonBasic>
             {/* </ShareButton> */}
             <ShareToDialog ref={shareButtonRef} />
             <ButtonBasic onClick={() => onClearAll?.()}>

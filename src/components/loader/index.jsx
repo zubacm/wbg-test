@@ -3,7 +3,7 @@
 const Loader = ({ ...rest }) => {
   return (
     <>
-      <i class="fi fi-rs-background" />
+      <i classNames="fi fi-rs-background" />
     </>
   );
 };

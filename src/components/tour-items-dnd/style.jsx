@@ -8,6 +8,8 @@ export const DndContainer = styled.div`
   transition: all 0.2s ease-out;
   @media (max-width: ${MEDIUM_SIZE_PX + "px"}) {
     gap: 8px;
+     max-height: 250px;
+    overflow-y: auto;
   }
 `;
 

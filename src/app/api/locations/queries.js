@@ -63,7 +63,7 @@ const getPlaces = async ({
     path += `hashtag=${hashtags.join(",")}&`;
   }
 
-  path += `_fields[]=id&_fields[]=link&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard&per_page=${perPage}`;
+  path += `_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard&per_page=${perPage}`;
   // const { data } = await api.get(`/place?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`);
 
   const { data } = await api.get(path);
@@ -126,7 +126,7 @@ export const usePlacesSearch = ({
 const getPlacesByIds = async (ids) => {
   // const { data } = await api.get(`/place?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`);
   const { data } = await api.get(
-    `/place?include=${ids}&_fields[]=id&_fields[]=link&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard`
+    `/place?include=${ids}&_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard`
   );
 
   return data;

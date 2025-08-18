@@ -28,17 +28,17 @@ const PlacesSearch = forwardRef(({ search, onSelectPlace = () => {} }, ref) => {
         <PlaceSearch
           id={`option-item-${index + 1}`}
           key={`place__search__${x?.id}`}
-          name={x?.acf?.location?.name}
+          name={x?.title?.rendered}
           countryShort={x?.acf?.location?.country_short}
           featuredMedia={x?.featured_media}
           boldStaringIndex={
-            x?.acf?.location?.name?.length >= 0
-              ? x?.acf?.location?.name?.indexOf(search)
+            x?.title?.rendered?.length >= 0
+              ? x?.title?.rendered?.indexOf(search)
               : 0
           }
           boldEndingIndex={
-            x?.acf?.location?.name?.length >= 0
-              ? x?.acf?.location?.name?.indexOf(search) + search?.length
+            x?.title?.rendered?.length >= 0
+              ? x?.title?.rendered?.indexOf(search) + search?.length
               : 0
           }
           onSelectPlace={() => onSelectPlace(x)}

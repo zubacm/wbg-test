@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
   display: flex;
-  gap: 4px;
   padding: 0 4px;
   width: 100%;
   background-color: var(--white);
@@ -25,6 +24,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     flex: 1;
+    padding-left: 4px;
   }
 
   & .gray-txt {
@@ -67,16 +67,31 @@ export const Wrapper = styled.div`
     }
   }
 
+  & .mobile-swapy-handle {
+    border-right: 1px solid var(--gray-20);
+    padding: 0 12px;
+  }
+
   @media (max-width: ${MEDIUM_SIZE_PX + "px"}) {
     height: 44px;
     align-items: center;
 
-    & .place-img, .tour-item-txt {
+    & .place-img,
+    .tour-item-txt {
       display: none;
     }
 
     & .times-btn {
       margin-top: 0;
+    }
+
+    & .chevron-icons {
+      pointer-events: none;
+
+      & i {
+        font-size: 26px;
+        pointer-events: none;
+      }
     }
   }
 `;

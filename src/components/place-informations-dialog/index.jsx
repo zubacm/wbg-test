@@ -26,15 +26,12 @@ const PlaceInformationsDialog = forwardRef(
     return (
       <>
         <dialog ref={dialogRef}>
-          <TimesBtnWrapper>
-            <ButtonTransparent size="small" onClick={() => dialogRef.current.close()}>
-              <i className="fi fi-rs-cross i-16" />
-            </ButtonTransparent>
-          </TimesBtnWrapper>
+         
           <PlaceInformationsDialogContent
             {...data}
             selectedLocations={selectedLocations}
             onSelect={() => onSelectPlace?.(data)}
+            onClose={() => dialogRef.current.close()}
           />
         </dialog>
       </>

@@ -70,7 +70,7 @@ const FilterHashtagsContent = ({ hashtags, onSelect = () => {}, ...rest }) => {
                   (y) => y?.toString() === x?.id?.toString()
                 )}
               >
-                #{x?.name}
+                {x?.name}
               </FilterSecItem>
             ))}
           </FilteringSection>

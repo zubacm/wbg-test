@@ -22,6 +22,7 @@ const MapLocations = ({
   onZoomPlace,
   selectedLocations,
   onShowInfo,
+  placesFiler,
   ...rest
 }) => {
   // const router = useRouter();
@@ -41,6 +42,7 @@ const MapLocations = ({
     features: featFilter,
     types: typesFilter,
     hashtags: hashtFilter,
+    locations: placesFiler?.map(x => x?.value),
     text: textFilter,
   });
   const map = useMap();

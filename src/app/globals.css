@@ -406,3 +406,10 @@ i {
 .leaflet-control-attribution {
   display: none;
 }
+
+div[id^="react-select-2-option-"] {
+  text-overflow: hidden;
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

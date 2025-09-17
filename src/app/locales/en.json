@@ -66,7 +66,8 @@
         "enterPlaceOrHashtag": "Enter place or hashtag",
         "shareThisTour": "Share this tour",
         "showOnlyPlacesFromRoute": "Show only places from route",
-        "showAllPlaces": "Show all places"
+        "showAllPlaces": "Show all places",
+        "selectLocations": "Select locations"
     },
     "languages": {
         "chooseLanguage": "Choose language",

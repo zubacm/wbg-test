@@ -66,7 +66,8 @@
         "enterPlaceOrHashtag": "Unesi ime ili hashtag",
         "shareThisTour": "Podeli ovu turu",
         "showOnlyPlacesFromRoute": "Prikaži samo mesta sa rute",
-        "showAllPlaces": "Prikaži sva mesta"
+        "showAllPlaces": "Prikaži sva mesta",
+        "selectLocations": "Izaberi lokacije"
     },
     "languages": {
         "chooseLanguage": "Izaberite jezik",

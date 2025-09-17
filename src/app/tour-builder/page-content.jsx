@@ -18,6 +18,8 @@ export default function TourBuilderContent() {
 
   // const { data: token } = useToken();
 
+  const [placesFiler, setPlacesFilter] = useState([]);
+
   const {
     tour,
     tourTitle,
@@ -161,14 +163,33 @@ export default function TourBuilderContent() {
 
   const getNavigationUrl = () => {
     if (selectedLocationsRef?.current?.length) {
-      let mapPath = selectedLocationsRef?.current
-        ?.sort((a, b) => a?.displaySequence - b?.displaySequence)
-        ?.map((x) => {
-          return `/${x?.lat},${x?.lng}`;
-        });
-      const tourPath = "https://www.google.com/maps/dir" + mapPath;
+      // let mapPath = selectedLocationsRef?.current
+      //   ?.sort((a, b) => a?.displaySequence - b?.displaySequence)
+      //   ?.map((x) => {
+      //     return `/${x?.lat},${x?.lng}`;
+      //   });
+      // const tourPath = "https://www.google.com/maps/dir" + mapPath;
 
-      return tourPath;
+      let tourPath = "https://www.google.com/maps/dir/?api=1";
+
+      selectedLocationsRef?.current
+        ?.sort((a, b) => a?.displaySequence - b?.displaySequence)
+        ?.map((x, index) => {
+          if (index === 0) {
+            tourPath += `&origin=${x?.lat},${x?.lng}`;
+          } else if (index === selectedLocationsRef?.current?.length - 1) {
+            tourPath += `&destination=${x?.lat},${x?.lng}`;
+          } else if (index === 1 && selectedLocationsRef?.current?.length > 2) {
+            tourPath += `&waypoints=${x?.lat},${x?.lng}`;
+          } else {
+            tourPath += `|${x?.lat},${x?.lng}`;
+          }
+          // return `/${x?.lat},${x?.lng}`;
+        });
+
+      //www.google.com/maps/dir/?api=1&origin=44.69644417059,17.80071019708&destination=43.83926551537,16.55488997587&waypoints=44.33769425074,17.26996828553
+
+      https: return tourPath;
     }
   };
 
@@ -226,6 +247,7 @@ export default function TourBuilderContent() {
             onToggleShowOnlySelected={() =>
               mapLocationsRef?.current?.toggleShowOnlySelectedLocations()
             }
+            onSelectLocations={(v) => setPlacesFilter(v)}
           />
         </Suspense>
         <Suspense>
@@ -235,6 +257,7 @@ export default function TourBuilderContent() {
             selectedLocations={selectedLocations}
             onShowInfo={handleShowInfo}
             mapLocationsRef={mapLocationsRef}
+            placesFiler={placesFiler}
           />
         </Suspense>
 

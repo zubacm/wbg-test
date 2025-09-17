@@ -52,6 +52,16 @@ export const FiltersTitle = styled.div`
     align-items: center;
   }
 
+  & .trash-btn {
+    position: relative;
+
+    & .chip {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+    }
+  }
+
   & .input-wrapper {
     width: 100%;
   }

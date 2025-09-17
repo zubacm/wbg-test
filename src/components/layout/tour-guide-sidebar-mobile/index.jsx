@@ -35,6 +35,8 @@ export default function TourGuideSidebarMobile({
   onStartNavigation = () => {},
   onGetNavigationUrl,
   onToggleShowOnlySelected = () => {},
+  onSelectLocations = () => {},
+  onClearFilters = () => {},
 }) {
   const [showAll, setShowAll] = useState(false);
   const [showSelected, setShowSelected] = useState(false);
@@ -42,7 +44,7 @@ export default function TourGuideSidebarMobile({
   const handleShowAll = () => {
     setShowSelected(!showSelected);
     onToggleShowOnlySelected();
-  }
+  };
 
   const handleSwipeUp = () => {
     if (selectedLocations?.length > 0) {
@@ -128,12 +130,19 @@ export default function TourGuideSidebarMobile({
             typesFilterCount +
             hashtFilterCount >
             0 && (
-            <ChipWrapper className="chip">
-              {countriesFilterCount +
-                featFilterCount +
-                typesFilterCount +
-                hashtFilterCount}
-            </ChipWrapper>
+            <ButtonNeutral
+              className="trash-btn"
+              onClick={() => onClearFilters()}
+            >
+              <i className="fi fi-rs-trash i-20" />
+
+              <ChipWrapper className="chip">
+                {countriesFilterCount +
+                  featFilterCount +
+                  typesFilterCount +
+                  hashtFilterCount}
+              </ChipWrapper>
+            </ButtonNeutral>
           )}
         </Header>
 
@@ -225,7 +234,7 @@ export default function TourGuideSidebarMobile({
         >
           <AccordionItem className="accordion-item-wbg" key="filters-content">
             <div {...swipeHandlers}>
-              <FiltersContent />
+              <FiltersContent onSelectLocations={onSelectLocations} />
             </div>
           </AccordionItem>
         </Accordion>

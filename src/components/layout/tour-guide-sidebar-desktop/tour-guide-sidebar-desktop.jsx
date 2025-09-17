@@ -17,6 +17,7 @@ import {
   TYPES_FILTER_NAME,
 } from "@/lib/consts/style-consts";
 import { EditableTourName } from "@/components/editable-tour-name";
+import ButtonNeutral from "@/components/buttons/button-neutral";
 
 export default function TourGuideSidebarDesktop({
   selectedLocations,
@@ -29,6 +30,8 @@ export default function TourGuideSidebarDesktop({
   onGetNavigationUrl,
   onStartNavigation = () => {},
   onToggleShowOnlySelected = () => {},
+  onSelectLocations = () => {},
+  onClearFilters = () => {}
 }) {
   const t = useTranslations("general");
 
@@ -80,15 +83,28 @@ export default function TourGuideSidebarDesktop({
             typesFilterCount +
             hashtFilterCount >
             0 && (
-            <ChipWrapper>
-              {countriesFilterCount +
-                featFilterCount +
-                typesFilterCount +
-                hashtFilterCount}
-            </ChipWrapper>
+            <>
+              <ButtonNeutral
+                className="trash-btn"
+                size="small"
+                onClick={() => onClearFilters()}
+              >
+                <i className="fi fi-rs-trash i-16" />
+                {/* &nbsp;
+            {showSelected === true
+              ? t("showAllPlaces")
+              : t("showOnlyPlacesFromRoute")} */}
+                <ChipWrapper className="chip">
+                  {countriesFilterCount +
+                    featFilterCount +
+                    typesFilterCount +
+                    hashtFilterCount}
+                </ChipWrapper>
+              </ButtonNeutral>
+            </>
           )}
         </FiltersTitle>
-        <FiltersContent />
+        <FiltersContent onSelectLocations={onSelectLocations} />
       </Wrapper>
     </>
   );

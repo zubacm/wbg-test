@@ -4,17 +4,21 @@ import { isDefined } from "@/lib/util";
 
 // ====================================================================================================
 
-const getLocations = async () => {
-  const { data } = await api.get(
-    `/location?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`
-  );
+const getLocations = async (search) => {
+  let path = `/location?`;
+  if (search?.length > 0) {
+    path += `search=${search}&_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`;
+  } else {
+    path += `_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`;
+  }
+  const { data } = await api.get(path);
 
   return data;
 };
 
-export const useLocations = () => {
+export const useLocations = (search) => {
   return useQuery({
-    queryKey: ["locations"],
+    queryKey: ["locations", search],
     queryFn: async () => getLocations(),
   });
 };
@@ -28,6 +32,7 @@ const getPlaces = async ({
   features,
   types,
   hashtags,
+  locations,
 }) => {
   let path = `/place?`;
 
@@ -42,6 +47,13 @@ const getPlaces = async ({
     path += `country_=${countries.join(",")}&`;
   }
 
+  if (locations?.length > 0) {
+    if (path != `/place?`) {
+      path += `&`;
+    }
+    path += `location=${locations.join(",")}&`;
+  }
+
   if (features?.length > 0) {
     if (path != `/place?`) {
       path += `&`;
@@ -49,21 +61,21 @@ const getPlaces = async ({
     path += `feature=${features.join(",")}&`;
   }
 
-  if (features?.types > 0) {
+  if (types?.length > 0) {
     if (path != `/place?`) {
       path += `&`;
     }
     path += `_type=${types.join(",")}&`;
   }
 
-  if (features?.hashtags > 0) {
+  if (hashtags?.length > 0) {
     if (path != `/place?`) {
       path += `&`;
     }
     path += `hashtag=${hashtags.join(",")}&`;
   }
 
-  path += `_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard&per_page=${perPage}`;
+  path += `_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=location&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard&per_page=${perPage}`;
   // const { data } = await api.get(`/place?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`);
 
   const { data } = await api.get(path);
@@ -77,6 +89,7 @@ export const usePlaces = ({
   hashtags,
   features,
   types,
+  locations,
   disabled,
 }) => {
   return useQuery({
@@ -87,14 +100,22 @@ export const usePlaces = ({
       hashtags?.toString(),
       features?.toString(),
       types?.toString(),
+      locations.toString(),
       perPage,
     ],
     queryFn: async () =>
-      getPlaces({ text, perPage, countries, features, types, hashtags }),
+      getPlaces({
+        text,
+        perPage,
+        countries,
+        features,
+        types,
+        hashtags,
+        locations,
+      }),
     enabled: disabled !== true,
   });
 };
-
 
 export const usePlacesSearch = ({
   text,

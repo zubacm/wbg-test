@@ -16,11 +16,12 @@ const Map = ({
   selectedLocations,
   onShowInfo,
   mapLocationsRef,
+  placesFiler,
   ...rest
 }) => {
   const [mapData, setMapData] = useState({
     center: [44.7722, 17.191],
-    zoomLevel: 15,
+    zoomLevel: 7,
     key: 0,
   });
 
@@ -47,6 +48,7 @@ const Map = ({
         }}
         selectedLocations={selectedLocations}
         onShowInfo={(data) => onShowInfo?.(data)}
+        placesFiler={placesFiler}
       />
       <PlacesPolylines ref={ref} />
     </MapContainer>

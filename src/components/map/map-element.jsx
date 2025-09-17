@@ -6,6 +6,7 @@ import { isDefined } from "@/lib/util";
 import { usePlaceImage } from "@/app/api/locations/queries";
 import { useRef, useState } from "react";
 import PlaceCard from "../place-card";
+import ButtonTransparent from "../buttons/button-transparent";
 
 const MapElement = ({
   ref,
@@ -53,7 +54,7 @@ const MapElement = ({
         eventHandlers={{
           click: (e) => {
             // console.log("KLIK", e);
-            onZoomPlace?.(e?.latlng);
+            // onZoomPlace?.(e?.latlng);
             isActionRef.current = true;
             setHover(true);
             // onSelect?.(data?.media_details?.sizes?.thumbnail?.source_url);
@@ -167,6 +168,13 @@ const MapElement = ({
                   thumbnail={data?.media_details?.sizes?.thumbnail?.source_url}
                   isSelected={isSelected}
                 />
+
+                <ButtonTransparent
+                  className="zoom-btn"
+                  onClick={() => onZoomPlace?.(center)}
+                >
+                  <i className="fi fi-rs-zoom-in i-16" />
+                </ButtonTransparent>
               </TooltipCardWrapper>
             </Tooltip>
           </>

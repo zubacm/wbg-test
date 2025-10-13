@@ -4,7 +4,7 @@ import { isDefined } from "@/lib/util";
 
 // ====================================================================================================
 
-const getLocations = async (search) => {
+const getLocations = async (search, countries) => {
   let path = `/location?`;
   if (search?.length > 0) {
     path += `search=${search}&_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`;
@@ -13,12 +13,13 @@ const getLocations = async (search) => {
   }
   const { data } = await api.get(path);
 
+  // filter
   return data;
 };
 
-export const useLocations = (search) => {
+export const useLocations = (search, countries) => {
   return useQuery({
-    queryKey: ["locations", search],
+    queryKey: ["locations", search, countries?.join(",")],
     queryFn: async () => getLocations(),
   });
 };

@@ -101,7 +101,7 @@ export default function TourGuideSidebarMobile({
         >
           {selectedLocations?.length > 0 && (
             <>
-              <i className="fi fi-rs-angle-small-down" />
+              <i className="fi fi-rs-angle-down" />
             </>
           )}
         </SliderUpDown>
@@ -112,19 +112,21 @@ export default function TourGuideSidebarMobile({
             onChangeTourTitle={onChangeTourTitle}
             // chipsValue={selectedLocations?.length}
           />
-          <ButtonNeutral
-            onClick={() => {
-              setShowAll(false);
-              setShowFilters(!showFilters);
-            }}
-          >
-            {showFilters === true ? (
-              <i className="fi fi-rs-check i-20" />
-            ) : (
-              <i className="fi fi-rs-settings-sliders i-20" />
-            )}
-          </ButtonNeutral>
-
+          
+            <ButtonNeutral
+              onClick={() => {
+                setShowAll(false);
+                setShowFilters(!showFilters);
+              }}
+              className="filter-btn"
+            >
+              {showFilters === true ? (
+                <i className="fi fi-rs-check i-20" />
+              ) : (
+                <i className="fi fi-rs-settings-sliders i-20" />
+              )}
+            </ButtonNeutral>
+      
           {countriesFilterCount +
             featFilterCount +
             typesFilterCount +

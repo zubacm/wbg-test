@@ -39,17 +39,32 @@ export const SliderUpDown = styled.div`
   cursor: pointer;
 
   & i {
-    color: var(--gray-50);
+    /* color: var(--gray-50); */
     font-size: 16px;
     transition-duration: 0.4s;
     transition-property: transform;
     transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
+    animation: color-cycle 2s infinite alternate;
 
     ${(p) =>
       p.isOpen === true &&
       `  transform: rotate(0deg);
     -webkit-transform: rotate(0deg);`}
+  }
+
+  @keyframes color-cycle {
+    0% {
+      color: #6fd46f;
+    }
+
+    50% {
+      color: var(--gray-50);
+    }
+
+    100% {
+      color: #6fd46f;
+    }
   }
 `;
 
@@ -70,5 +85,53 @@ export const Header = styled.div`
     flex: 1;
     display: flex;
     align-items: center;
+  }
+
+  & .filter-btn-wrap {
+    position: relative;
+  }
+
+  & .filter-btn {
+    position: relative;
+
+    --border-angle: 0turn;
+    --main-bg: conic-gradient(
+      from var(--border-angle),
+      white,
+      white 5%,
+      white 60%,
+      white 95%
+    );
+    border: solid 2px transparent;
+    --gradient-border: conic-gradient(
+      from var(--border-angle),
+      transparent 10%,
+      #6fd46f,
+      #d5e9d5 99%,
+      transparent
+    );
+    background: var(--main-bg) padding-box, var(--gradient-border) border-box,
+      var(--main-bg) border-box;
+    background-position: center center;
+    -webkit-animation: bg-spin 2s linear infinite;
+    animation: bg-spin 2s linear infinite;
+  }
+
+  /* animation */
+  @-webkit-keyframes bg-spin {
+    to {
+      --border-angle: 1turn;
+    }
+  }
+  @keyframes bg-spin {
+    to {
+      --border-angle: 1turn;
+    }
+  }
+
+  @property --border-angle {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0turn;
   }
 `;

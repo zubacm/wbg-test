@@ -3,23 +3,44 @@
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { AccordionWrapper, FilteringSection, FilterSecItem } from "../style";
 import FilterAccordionTitle from "../filter-accordion-title";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import FilterTitle from "../filter-title";
-import { LOCATIONS_FILTER_NAME } from "@/lib/consts/style-consts";
+import {
+  COUNTRIES_FILTER_NAME,
+} from "@/lib/consts/style-consts";
 import ReactSelectWrapper from "@/components/react-select-wrapper";
+import { useCountries } from "@/app/api/reference-data/countries/queries";
+// getCountris
 
 // Example async function to fetch options
-const loadOptions = async (inputValue) => {
+const loadOptions = async (inputValue, countries) => {
+
+  const countryCodes = countries?.map((x) => x?.acf?.location?.country_short);
   try {
     const response = await fetch(
       `https://westbalkanguide.com/wp-json/wp/v2/location?search=${inputValue}&_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`
     );
     const data = await response.json();
 
+    console.log("code", countryCodes);
+    console.log("dtatata", data);
+
     // Map data into react-select format: { value, label }
-    return data.map((item) => ({
+
+    if (countryCodes?.length > 0) {
+      return data
+        ?.filter((x) =>
+          countryCodes?.some((y) => y === x?.acf?.location?.country_short)
+        )
+        ?.map((item) => ({
+          value: item.id,
+          label: item.name,
+        }));
+    }
+
+    return data?.map((item) => ({
       value: item.id,
       label: item.name,
     }));
@@ -33,6 +54,10 @@ const FilterLocationsContent = ({ onSelect = () => {}, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const t = useTranslations("general");
+  const searchParams = useSearchParams();
+  const countriesFilter = searchParams?.get(COUNTRIES_FILTER_NAME) || "";
+
+  const { data: countries } = useCountries();
 
   // const searchParams = useSearchParams();
   // const locationsFilterArray =
@@ -50,7 +75,7 @@ const FilterLocationsContent = ({ onSelect = () => {}, ...rest }) => {
         <FilterTitle
           name={t("locations")}
           // showDot={locationsFilterArray?.length > 0}
-          showDot={selectedOptions?.length  > 0}
+          showDot={selectedOptions?.length > 0}
         />
         <i className="fi fi-rs-angle-up chevron-accordion" />
       </FilterAccordionTitle>
@@ -80,10 +105,20 @@ const FilterLocationsContent = ({ onSelect = () => {}, ...rest }) => {
             ))} */}
 
             <ReactSelectWrapper
+              key={`location__select__${countriesFilter}`}
               isMulti
               cacheOptions
               defaultOptions
-              loadOptions={loadOptions}
+              loadOptions={(e) =>
+                loadOptions(
+                  e,
+                  countries?.filter((x) =>
+                    countriesFilter
+                      ?.split(",")
+                      ?.some((y) => y?.toString() === x?.id?.toString())
+                  )
+                )
+              }
               value={selectedOptions}
               onChange={(v) => {
                 setSelectedOptions(v);

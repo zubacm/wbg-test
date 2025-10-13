@@ -413,3 +413,8 @@ div[id^="react-select-2-option-"] {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+@media (prefers-color-scheme: dark) {
+  .leaflet-interactive {
+    stroke: #0D2F2B;
+  }
+}

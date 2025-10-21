@@ -97,6 +97,7 @@ export default function TourGuideSidebarMobile({
             }
           }}
           isOpen={showAll}
+          hasBorder={selectedLocations?.length > 0}
           {...swipeHandlers}
         >
           {selectedLocations?.length > 0 && (

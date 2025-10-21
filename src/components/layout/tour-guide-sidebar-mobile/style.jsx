@@ -43,7 +43,7 @@ export const SliderUpDown = styled.div`
   color: var(--button-primary-txt);
   padding-top: 4px;
   font-weight: 500;
-  border-bottom: 1px solid var(--button-primary-txt);
+  border-bottom: ${p => p.hasBorder === true ? "1px solid var(--button-primary-txt)" : "1px solid transparent"};
 
   & .angle-icon {
     /* color: var(--gray-50); */

@@ -31,14 +31,21 @@ export const Wrapper = styled.div`
 `;
 
 export const SliderUpDown = styled.div`
-  height: 16px;
+  /* height: 16px; */
+  height: 32px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  gap: 12px;
+  font-size: 16px;
+  color: var(--button-primary-txt);
+  padding-top: 4px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--button-primary-txt);
 
-  & i {
+  & .angle-icon {
     /* color: var(--gray-50); */
     font-size: 16px;
     transition-duration: 0.4s;
@@ -55,7 +62,7 @@ export const SliderUpDown = styled.div`
 
   @keyframes color-cycle {
     0% {
-      color: #6fd46f;
+      color: var(--button-primary-txt);
     }
 
     50% {
@@ -63,7 +70,7 @@ export const SliderUpDown = styled.div`
     }
 
     100% {
-      color: #6fd46f;
+      color: var(--button-primary-txt);
     }
   }
 `;

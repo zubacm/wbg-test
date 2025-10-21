@@ -67,7 +67,9 @@
         "shareThisTour": "Share this tour",
         "showOnlyPlacesFromRoute": "Show only places from route",
         "showAllPlaces": "Show all places",
-        "selectLocations": "Select locations"
+        "selectLocations": "Select locations",
+        "planAndStart": "Plan & start",
+        "openYourTour": "Open your tour"
     },
     "languages": {
         "chooseLanguage": "Choose language",

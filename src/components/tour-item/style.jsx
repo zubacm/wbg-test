@@ -1,4 +1,5 @@
 import { MEDIUM_SIZE_PX } from "@/lib/consts/style-consts";
+import { truncateTextInRows } from "@/lib/util";
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
@@ -33,6 +34,7 @@ export const Wrapper = styled.div`
   & .tour-item-main-txt {
     font-size: 14px;
     font-weight: 700;
+    ${truncateTextInRows(2)}
   }
 
   & .tour-item-txt {

@@ -15,6 +15,6 @@ export const useMediaImg = (media) => {
   return useQuery({
     queryKey: ["media", media],
     queryFn: async () => getMedia(media),
-    enabled: media !== null && media != undefined,
+    enabled: media !== null && media != undefined && media !== 0,
   });
 };

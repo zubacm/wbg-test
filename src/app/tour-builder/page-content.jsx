@@ -4,20 +4,50 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import PlaceInformationsDialog from "@/components/place-informations-dialog";
 import NewTourModal from "@/components/new-tour/new-tour-modal";
 import MainMenu from "@/components/main-menu";
-import TourGuideSidebarMobile from "@/components/layout/tour-guide-sidebar-mobile";
 import useSelectedTour from "../hooks/useSelectedTour";
-import TourGuideSidebarDesktop from "@/components/layout/tour-guide-sidebar-desktop/tour-guide-sidebar-desktop";
 import TourGuideSidebar from "@/components/layout/tour-guide-sidebar";
 import { ToastContainer } from "react-toastify";
-import { useToken } from "../api/auth/queries";
+import { PLACE_PARAM } from "@/lib/consts/style-consts";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePlacesByIds } from "../api/locations/queries";
 // import TourGuideSidebar from "@/components/layout/tour-guide-sidebar";
 
 export default function TourBuilderContent() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const searchParams = useSearchParams();
+  const placesArray = searchParams?.get(PLACE_PARAM)?.split(",") || [];
+
+  const { data: defaultPlaces } = usePlacesByIds(placesArray);
+
   const [selectedLocations, setSelectedLocations] = useState([]);
   const selectedLocationsRef = useRef([]);
 
-  // const { data: token } = useToken();
+  useEffect(() => {
+    selectedLocationsRef.current =
+      defaultPlaces?.length > 0
+        ? defaultPlaces?.map((x, i) => {
+            return {
+              shortDescription: x?.acf?.short_description,
+              city: x?.acf?.location?.city,
+              countryShort: x?.acf?.location?.country_short,
+              lat: x?.acf?.location?.lat,
+              lng: x?.acf?.location?.lng,
+              name: x?.acf?.location?.address,
+              displaySequence: i,
+              shortDescription: x?.acf?.short_description,
+              id: x?.id,
+              featuredMedia: x?.featured_media,
+              acf: x?.acf,
+            };
+          })
+        : [];
 
+    setSelectedLocations(selectedLocationsRef?.current);
+  }, [defaultPlaces]);
+
+  // const { data: token } = useToken();
   const [placesFiler, setPlacesFilter] = useState([]);
 
   const {
@@ -106,18 +136,6 @@ export default function TourBuilderContent() {
     );
     const swappedDisSequence = swappedLocation?.displaySequence;
 
-    // console.log(
-    //   "dragging locsss ",
-    //   draggingLocation,
-    //   swappedLocation,
-    //   dragginDispSequence,
-    //   swappedDisSequence
-    // );
-    // console.log("before", selectedLocationsRef?.current);
-
-    // draggingLocation.displaySequence = swappedDisSequence;
-    // swappedLocation.displaySequence = dragginDispSequence;
-
     selectedLocationsRef.current = selectedLocationsRef?.current?.map((x) => {
       if (x.id === +draggingItem) {
         return {
@@ -142,8 +160,29 @@ export default function TourBuilderContent() {
 
     setSelectedLocations([...selectedLocationsRef?.current]);
 
+    clearOneLocationFromSearchParams(id);
+
     // inform map change
     mapRef?.current?.onChangeLocations(selectedLocationsRef?.current);
+  };
+
+  const clearOneLocationFromSearchParams = (id) => {
+    const params = new URLSearchParams(searchParams);
+
+
+    if (placesArray?.some((x) => x?.toString() === id?.toString())) {
+      var filtered = placesArray?.filter(
+        (x) => x?.toString() !== id?.toString()
+      );
+
+      if (filtered?.length > 0) {
+        params.set(PLACE_PARAM, filtered?.toString());
+      } else {
+        params.delete(PLACE_PARAM);
+      }
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const handleShowInfo = (data) => {
@@ -153,8 +192,15 @@ export default function TourBuilderContent() {
   const handleClearAll = () => {
     selectedLocationsRef.current = [];
     setSelectedLocations([]);
+    clearAllPlacesParams();
     // inform map change
     mapRef?.current?.onChangeLocations(selectedLocationsRef?.current);
+  };
+
+  const clearAllPlacesParams = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete(PLACE_PARAM);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   //   useEffect(() => {

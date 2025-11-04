@@ -54,7 +54,7 @@ export default function TourItem({
         alt=""
       />
       <div className="tour-item-content">
-        <div className="tour-item-main-txt">
+        <div className="tour-item-main-txt" title={name}>
           {/* <span className="gray-txt">{(index + 1)}.</span> */}
           &nbsp;{name}
         </div>

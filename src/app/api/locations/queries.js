@@ -148,7 +148,7 @@ export const usePlacesSearch = ({
 const getPlacesByIds = async (ids) => {
   // const { data } = await api.get(`/place?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`);
   const { data } = await api.get(
-    `/place?include=${ids}&_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard`
+    `/place?include=${ids}&_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=location&_fields[]=country_&_fields[]=hashtag&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard`
   );
 
   return data;
@@ -176,6 +176,6 @@ export const usePlaceImage = (media) => {
   return useQuery({
     queryKey: ["place-image", media],
     queryFn: async () => getPlaceImage(media),
-    enabled: media !== null && media != undefined,
+    enabled: media !== null && media != undefined && media !== 0,
   });
 };

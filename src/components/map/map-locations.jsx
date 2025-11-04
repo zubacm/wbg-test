@@ -42,7 +42,7 @@ const MapLocations = ({
     features: featFilter,
     types: typesFilter,
     hashtags: hashtFilter,
-    locations: placesFiler?.map(x => x?.value),
+    locations: placesFiler?.map((x) => x?.value),
     text: textFilter,
   });
   const map = useMap();
@@ -119,7 +119,7 @@ const MapLocations = ({
             // map.setZoom(12);
             setTimeout(() => {
               map.setZoom(15);
-            }, [500])
+            }, [500]);
           }}
           isSelected={selectedLocations?.some((y) => y?.id === x?.id)}
           onShowInfo={(thumbnail) =>

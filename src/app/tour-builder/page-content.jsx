@@ -7,9 +7,10 @@ import MainMenu from "@/components/main-menu";
 import useSelectedTour from "../hooks/useSelectedTour";
 import TourGuideSidebar from "@/components/layout/tour-guide-sidebar";
 import { ToastContainer } from "react-toastify";
-import { PLACE_PARAM } from "@/lib/consts/style-consts";
+import { PLACE_PARAM, TOUR_PARAM } from "@/lib/consts/style-consts";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { usePlacesByIds } from "../api/locations/queries";
+import { usePlacesByIds, useTourPlaces } from "../api/locations/queries";
+import { isDefined } from "@/lib/util";
 // import TourGuideSidebar from "@/components/layout/tour-guide-sidebar";
 
 export default function TourBuilderContent() {
@@ -17,9 +18,12 @@ export default function TourBuilderContent() {
   const pathname = usePathname();
 
   const searchParams = useSearchParams();
-  const placesArray = searchParams?.get(PLACE_PARAM)?.split(",") || [];
+  const tourId = searchParams?.get(TOUR_PARAM) || null;
+  const placesArray = !isDefined(tourId)
+    ? searchParams?.get(PLACE_PARAM)?.split(",") || []
+    : [];
 
-  const { data: defaultPlaces } = usePlacesByIds(placesArray);
+  const { data: defaultPlaces } = useTourPlaces(tourId, placesArray);
 
   const [selectedLocations, setSelectedLocations] = useState([]);
   const selectedLocationsRef = useRef([]);
@@ -32,8 +36,8 @@ export default function TourBuilderContent() {
               shortDescription: x?.acf?.short_description,
               city: x?.acf?.location?.city,
               countryShort: x?.acf?.location?.country_short,
-              lat: x?.acf?.location?.lat,
-              lng: x?.acf?.location?.lng,
+              lat: +x?.acf?.location?.lat,
+              lng: +x?.acf?.location?.lng,
               name: x?.acf?.location?.address,
               displaySequence: i,
               shortDescription: x?.acf?.short_description,
@@ -45,6 +49,24 @@ export default function TourBuilderContent() {
         : [];
 
     setSelectedLocations(selectedLocationsRef?.current);
+    mapRef?.current?.onChangeLocations(selectedLocationsRef?.current);
+
+    const minLat = Math.min(
+      ...selectedLocationsRef?.current?.map((x) => x?.lat)
+    );
+    const minLng = Math.min(
+      ...selectedLocationsRef?.current?.map((x) => x?.lng)
+    );
+    const maxLat = Math.max(
+      ...selectedLocationsRef?.current?.map((x) => x?.lat)
+    );
+    const maxLng = Math.max(
+      ...selectedLocationsRef?.current?.map((x) => x?.lng)
+    );
+    mapRef?.current?.onChangeBounds([
+      [minLat, minLng],
+      [maxLat, maxLng],
+    ]);
   }, [defaultPlaces]);
 
   // const { data: token } = useToken();
@@ -168,7 +190,6 @@ export default function TourBuilderContent() {
 
   const clearOneLocationFromSearchParams = (id) => {
     const params = new URLSearchParams(searchParams);
-
 
     if (placesArray?.some((x) => x?.toString() === id?.toString())) {
       var filtered = placesArray?.filter(

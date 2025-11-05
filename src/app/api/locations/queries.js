@@ -164,6 +164,34 @@ export const usePlacesByIds = (ids) => {
 
 // ====================================================================================================
 
+const getTourPlaces = async (tourId, placesIds) => {
+  if (isDefined(tourId)) {
+    const { data } = await api.get(`/tour/${tourId}`);
+    const ids = data?.acf?.places;
+
+    if (ids?.length > 0) {
+      const dta = await getPlacesByIds(ids);
+
+      return dta;
+    }
+    return null;
+  }
+
+  const dta = await getPlacesByIds(placesIds);
+
+  return dta;
+};
+
+export const useTourPlaces = (tourId, placesIds) => {
+  return useQuery({
+    queryKey: ["tour-places", tourId, placesIds?.join(",")],
+    queryFn: async () => getTourPlaces(tourId, placesIds),
+    enabled: isDefined(tourId) || placesIds?.length > 0,
+  });
+};
+
+// ====================================================================================================
+
 const getPlaceImage = async (media) => {
   const { data } = await api.get(
     `/media/${media}?_fields[]=id&_fields[]=media_details`
@@ -179,3 +207,5 @@ export const usePlaceImage = (media) => {
     enabled: media !== null && media != undefined && media !== 0,
   });
 };
+
+// ====================================================================================================

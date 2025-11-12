@@ -6,6 +6,7 @@ import MainMenuDesktop from "./main-menu-desktop";
 import OpenSavedToursModal from "../open-saved-tours-modal";
 import Navbar from "../layout/navbar";
 import SearchPlacesAndHashtags from "../search-places-and-hashtags";
+// import LoginModal from "../login-modal";
 
 export default function MainMenu({
   onOpenTour = () => {},
@@ -45,6 +46,7 @@ export default function MainMenu({
       />
 
       <ChooseLanguageModal ref={languageModalRef} />
+      {/* <LoginModal ref={languageModalRef}/> */}
       <OpenSavedToursModal
         ref={openSavedTourModalRef}
         onOpenTour={onOpenTour}

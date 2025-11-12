@@ -414,7 +414,7 @@ div[id^="react-select-2-option-"] {
   text-overflow: ellipsis;
 }
 @media (prefers-color-scheme: dark) {
-  .leaflet-interactive {
+  .leaflet-interactive:not([fill-rule="evenodd"]) {
     stroke: #0D2F2B;
   }
 }

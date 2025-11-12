@@ -8,7 +8,7 @@ import { isDefined } from "@/lib/util";
 import ButtonTransparent from "../buttons/button-transparent";
 
 const TextInput = forwardRef(
-  ({ defVal, showIcon = true, className = "", ...rest }, ref) => {
+  ({ defVal, showIcon = true, icon, className = "", ...rest }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [val, setVal] = useState(defVal || "");
 
@@ -29,7 +29,7 @@ const TextInput = forwardRef(
         isFocused={isFocused}
         ref={ref}
       >
-        {showIcon === true && <i className="fi fi-rs-route i-16" />}
+        {showIcon === true && <i className={`fi ${icon ?? "fi-rs-route"} i-16`} />}
         <input
           ref={
             isDefined(ref?.current)

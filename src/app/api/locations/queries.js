@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import api from "../api";
+import api, { apiCustom } from "../api";
 import { isDefined } from "@/lib/util";
 
 // ====================================================================================================
@@ -84,6 +84,65 @@ const getPlaces = async ({
   return data;
 };
 
+
+const getAllPlaces = async ({
+  text,
+  // perPage = Number.MAX_SAFE_INTEGER, // TODO
+  perPage = 100,
+  countries,
+  features,
+  types,
+  hashtags,
+  locations,
+}) => {
+  let path = `/place_all?`;
+
+  if (isDefined(text) && text.length > 0) {
+    path += `search=${text}&`;
+  }
+
+  if (countries?.length > 0) {
+    if (path != `/place_all?`) {
+      path += `&`;
+    }
+    path += `country_=${countries.join(",")}&`;
+  }
+
+  if (locations?.length > 0) {
+    if (path != `/place_all?`) {
+      path += `&`;
+    }
+    path += `location=${locations.join(",")}&`;
+  }
+
+  if (features?.length > 0) {
+    if (path != `/place_all?`) {
+      path += `&`;
+    }
+    path += `feature=${features.join(",")}&`;
+  }
+
+  if (types?.length > 0) {
+    if (path != `/place_all?`) {
+      path += `&`;
+    }
+    path += `_type=${types.join(",")}&`;
+  }
+
+  if (hashtags?.length > 0) {
+    if (path != `/place_all?`) {
+      path += `&`;
+    }
+    path += `hashtag=${hashtags.join(",")}&`;
+  }
+
+  path += `_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=location&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard`;
+  // const { data } = await api.get(`/place?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`);
+
+  const { data } = await apiCustom.get(path);
+  return data;
+};
+
 export const usePlaces = ({
   text,
   perPage,
@@ -106,7 +165,7 @@ export const usePlaces = ({
       perPage,
     ],
     queryFn: async () =>
-      getPlaces({
+      getAllPlaces({
         text,
         perPage,
         countries,

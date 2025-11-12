@@ -238,15 +238,18 @@ export default function TourBuilderContent() {
       // const tourPath = "https://www.google.com/maps/dir" + mapPath;
 
       let tourPath = "https://www.google.com/maps/dir/?api=1";
-
+      tourPath += `&origin=current+location`;
       selectedLocationsRef?.current
         ?.sort((a, b) => a?.displaySequence - b?.displaySequence)
         ?.map((x, index) => {
-          if (index === 0) {
-            tourPath += `&origin=${x?.lat},${x?.lng}`;
-          } else if (index === selectedLocationsRef?.current?.length - 1) {
+          // if (index === 0) {
+          //   tourPath += `&origin=${x?.lat},${x?.lng}`;
+          // } else
+          if (index === selectedLocationsRef?.current?.length - 1) {
             tourPath += `&destination=${x?.lat},${x?.lng}`;
-          } else if (index === 1 && selectedLocationsRef?.current?.length > 2) {
+            // } else if (index === 1 && selectedLocationsRef?.current?.length > 2) {
+          }
+          else if (index === 0) {
             tourPath += `&waypoints=${x?.lat},${x?.lng}`;
           } else {
             tourPath += `|${x?.lat},${x?.lng}`;

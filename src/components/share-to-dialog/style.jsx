@@ -37,6 +37,7 @@ export const ShareOption = styled.div`
   gap: 8px;
   cursor: pointer;
   font-size: 12px;
+  text-decoration: none;
 
   &:hover {
     background-color: var(--gray-20);

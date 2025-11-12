@@ -28,6 +28,7 @@ export const useLocations = (search, countries) => {
 
 const getPlaces = async ({
   text,
+  // perPage = Number.MAX_SAFE_INTEGER, // TODO
   perPage = 100,
   countries,
   features,

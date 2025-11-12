@@ -2,7 +2,7 @@
 "use client";
 
 /* eslint-disable react/jsx-key */
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { DialogContent, DialogWrapper, ShareOption } from "./style";
 import { ExternalShareItems } from "@/lib/consts/data";
 import ButtonBasic from "../buttons/button-basic";
@@ -12,12 +12,17 @@ import { toast } from "react-toastify";
 const ShareToDialog = forwardRef(({}, ref) => {
   const dialogRef = useRef();
   const linkRef = useRef();
+
+  // const [link, setLink] = useState("");
   const t = useTranslations("general");
 
   // Expose functions through ref
   useImperativeHandle(ref, () => ({
     open(tourLink) {
       linkRef.current = tourLink;
+
+      // let lnk = encodeURIComponent(tourLink);
+      // setLink(lnk);
       dialogRef?.current?.showModal();
     },
     close() {
@@ -26,10 +31,14 @@ const ShareToDialog = forwardRef(({}, ref) => {
     },
   }));
 
-  const handleShare = (link) => {
-    const sharedUrl = link?.replace(/\[link\]/g, encodeURI(linkRef.current));
+  const handleShare = (lnk) => {
+    // const sharedUrl = link?.replace(/\[link\]/g, encodeURI(linkRef.current));
 
-    window.open(sharedUrl, "_blank");
+    const sharedUrl = encodeURIComponent(linkRef?.current);
+
+    // window.open(`${lnk}${sharedUrl}`, "_blank");
+    window.open(`${lnk}${sharedUrl}`);
+
     ref?.current?.close();
   };
 
@@ -64,9 +73,17 @@ const ShareToDialog = forwardRef(({}, ref) => {
               <span>{t("copyToClipboard")}</span>
             </ShareOption>
             {ExternalShareItems?.map((item, index) => (
-              <ShareOption key={index} onClick={() => handleShare(item?.link)}>
+              <ShareOption key={index} onClick={() => handleShare(item?.share)}>
                 <span>{item?.text}</span>
               </ShareOption>
+              // <ShareOption
+              //   key={index}
+              //   href={`${item?.share}${link}`}
+              //   target="_blank"
+              //   rel="noopener noreferrer"
+              // >
+              //   <span>{item?.text}</span>
+              // </ShareOption>
             ))}
           </DialogContent>
         </DialogWrapper>

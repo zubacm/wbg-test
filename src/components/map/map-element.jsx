@@ -21,11 +21,12 @@ const MapElement = ({
   onZoomPlace,
   isSelected,
   onShowInfo,
+  thumbnail,
   id,
 }) => {
   const elementRef = useRef(null);
   const map = useMap();
-  const { data } = usePlaceImage(media);
+  // const { data } = usePlaceImage(media);
   const [hover, setHover] = useState(false);
 
   const closeCard = () => {
@@ -81,10 +82,7 @@ const MapElement = ({
           <Tooltip permanent direction="top" offset={[0, 40]} opacity={1}>
             <MapElementTooltipWrapper hover={hover}>
               <img
-                src={
-                  data?.media_details?.sizes?.thumbnail?.source_url ??
-                  "/Vector.svg"
-                }
+                src={thumbnail ?? "/Vector.svg"}
                 className="img-logo"
                 alt=""
                 id={`map-element-${id}`}
@@ -150,22 +148,10 @@ const MapElement = ({
                   countryShort={countryShort}
                   city={city}
                   className="place-card"
-                  onAdd={() =>
-                    onSelect?.(
-                      data?.media_details?.sizes?.thumbnail?.source_url
-                    )
-                  }
-                  onRemove={() =>
-                    onSelect?.(
-                      data?.media_details?.sizes?.thumbnail?.source_url
-                    )
-                  }
-                  onShowInfo={() =>
-                    onShowInfo?.(
-                      data?.media_details?.sizes?.medium_large?.source_url
-                    )
-                  }
-                  thumbnail={data?.media_details?.sizes?.thumbnail?.source_url}
+                  onAdd={() => onSelect?.()}
+                  onRemove={() => onSelect?.()}
+                  onShowInfo={() => onShowInfo?.()}
+                  thumbnail={thumbnail}
                   isSelected={isSelected}
                 />
 

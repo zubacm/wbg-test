@@ -33,6 +33,7 @@ export default function Navbar({
           alt=""
         />
         <div>{t("appName")}</div>
+        <div className="page-name-mob">{t("tourBuilder")?.toUpperCase()}</div>
       </MainTab>
       <VerticalLine className="no-medium" />
 

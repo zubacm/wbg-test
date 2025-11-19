@@ -17,9 +17,10 @@ export default function TourItem({
   displaySequence = 1,
   onRemoveLocation = () => {},
   featuredMedia,
+  swapy
 }) {
   const t = useTranslations("general");
-  const { data } = usePlaceImage(featuredMedia);
+  // const { data } = usePlaceImage(featuredMedia);
 
   const isSmallScreen = useDetectSmallScreen();
 
@@ -37,15 +38,15 @@ export default function TourItem({
         </div>
       )} */}
 
-      <div data-swapy-handle>
+      {swapy || <div data-swapy-handle>
         <div className="chevron-icons mobile-swapy-handle">
           <i className="fi fi-rs-sort" />
         </div>
-      </div>
+      </div>}
       <Image
         src={
           thumbnail ||
-          data?.media_details?.sizes?.thumbnail?.source_url ||
+          // data?.media_details?.sizes?.thumbnail?.source_url ||
           "/Vector.svg"
         }
         width="64"

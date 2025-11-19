@@ -98,12 +98,14 @@ const MapLocations = ({
           media={x?.featured_media}
           center={[x?.acf?.location?.lat, x?.acf?.location?.lng]}
           selectedIndex={selectedIndex}
+          thumbnail={x?.acf?.marker?.sizes?.medium}
           // name={x?.acf?.location?.name}
           name={x?.title?.rendered}
           onSelect={(thumbnail) =>
             onSelectPlace?.({
               id: x?.id,
-              thumbnail: thumbnail,
+              // thumbnail: thumbnail,
+              thumbnail: x?.acf?.marker?.sizes?.medium,
               countryShort: x?.acf?.location?.country_short,
               city: x?.acf?.location?.city,
               name: x?.title?.rendered,
@@ -126,7 +128,8 @@ const MapLocations = ({
             onShowInfo?.({
               ...x,
               id: x?.id,
-              thumbnail: thumbnail,
+              // thumbnail: thumbnail,
+              thumbnail: x?.acf?.marker?.sizes?.medium,
               countryShort: x?.acf?.location?.country_short,
               city: x?.acf?.location?.city,
               name: x?.title?.rendered,
@@ -154,7 +157,7 @@ const MapLocations = ({
           onSelect={(thumbnail) =>
             onSelectPlace?.({
               id: searchedPlace?.id,
-              thumbnail: thumbnail,
+              thumbnail: searchedPlace?.acf?.marker?.sizes?.medium,
               countryShort: searchedPlace?.acf?.location?.country_short,
               city: searchedPlace?.acf?.location?.city,
               name: searchedPlace?.title?.rendered,
@@ -171,11 +174,12 @@ const MapLocations = ({
             ]);
             // map.setZoom(20);
           }}
+           thumbnail={x?.acf?.marker?.sizes?.medium}
           isSelected={selectedLocations?.some((y) => y?.id === x?.id)}
           onShowInfo={(thumbnail) =>
             onShowInfo?.({
               id: searchedPlace?.id,
-              thumbnail: thumbnail,
+              thumbnail: searchedPlace?.acf?.marker?.sizes?.medium,
               countryShort: searchedPlace?.acf?.location?.country_short,
               city: searchedPlace?.acf?.location?.city,
               name: searchedPlace?.title?.rendered,

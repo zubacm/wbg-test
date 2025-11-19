@@ -84,7 +84,6 @@ const getPlaces = async ({
   return data;
 };
 
-
 const getAllPlaces = async ({
   text,
   // perPage = Number.MAX_SAFE_INTEGER, // TODO
@@ -165,7 +164,8 @@ export const usePlaces = ({
       perPage,
     ],
     queryFn: async () =>
-      getAllPlaces({
+      // getAllPlaces({
+      getPlaces({
         text,
         perPage,
         countries,

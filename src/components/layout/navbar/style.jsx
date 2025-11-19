@@ -102,6 +102,12 @@ export const MainTab = styled.div`
     color: var(--gray-50);
   }
 
+  & .page-name-mob {
+    font-size: 14px;
+    line-height: 13px;
+    word-spacing: 9999999px;
+  }
+
   @media (max-width: ${MEDIUM_SIZE_PX + "px"}) {
     flex: 1;
   }

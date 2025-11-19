@@ -66,6 +66,11 @@ export default function TourItemsDnd(props) {
             index={index}
             onRemoveLocation={onRemoveLocation}
             featuredMedia={v?.featuredMedia}
+            swapy={
+              <div className="chevron-icons mobile-swapy-handle">
+                <i className="fi fi-rs-sort" />
+              </div>
+            }
           />
         </>
       ),
@@ -82,7 +87,7 @@ export default function TourItemsDnd(props) {
 
     const swapy = createSwapy(container);
     swapy.onSwap((data) => {
-      console.log("on swap", data);
+      // console.log("on swap", data);
       onSwap?.(data?.draggingItem, data?.swappedWithItem);
       localStorage.setItem("slotItem", JSON.stringify(data?.object));
     });

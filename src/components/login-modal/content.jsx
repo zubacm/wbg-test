@@ -13,96 +13,104 @@ import { ClipLoader } from "react-spinners";
 import { storeCredentials } from "@/app/api/auth/indexdb";
 import { toast } from "react-toastify";
 
-const LoginModalContent = forwardRef(({ onClose = () => {}, onSetUser = () => {} }, ref) => {
-  const tGeneral = useTranslations("general");
+const LoginModalContent = forwardRef(
+  ({ onClose = () => {}, onSetUser = () => {} }, ref) => {
+    const tGeneral = useTranslations("general");
 
-  const [errorText, setErrorText] = useState("");
+    const [errorText, setErrorText] = useState("");
 
-  const dataRef = useRef({
-    username: "",
-    password: "",
-  });
-
-  const successLogin = async () => {
-    await storeCredentials(
-      dataRef?.current?.username,
-      dataRef?.current?.password,
-    );
-    onSetUser({
-      username: dataRef?.current?.username,
-      password: dataRef?.current?.password,
+    const dataRef = useRef({
+      username: "",
+      password: "",
     });
-    onClose();
-  };
 
-  const { mutate, isLoading } = useToken(
-    () => successLogin(
-      setErrorText("")
-    ),
-    (e) => {
-      setErrorText(e?.response?.data?.message || tGeneral("wrongCredentials"));
-      // toast.error(tGeneral("wrongCredentials"));
-    },
-  );
+    const successLogin = async () => {
+      await storeCredentials(
+        dataRef?.current?.username,
+        dataRef?.current?.password,
+      );
+      onSetUser({
+        username: dataRef?.current?.username,
+        password: dataRef?.current?.password,
+      });
+      onClose();
+    };
 
-  const onSubmit = (e) => {
-    e?.preventDefault();
-    setErrorText("");
-    mutate(dataRef?.current);
-  };
+    const { mutate, isLoading } = useToken(
+      () => successLogin(setErrorText("")),
+      (e) => {
+        setErrorText(
+          e?.response?.data?.message || tGeneral("wrongCredentials"),
+        );
+        // toast.error(tGeneral("wrongCredentials"));
+      },
+    );
 
-  return (
-    <FormWrapper>
-      <div className="titl">
-        <div />
-        <div>{tGeneral("login")?.toUpperCase()}</div>
-        <ButtonTransparent type="button" size="small" onClick={onClose}>
-          <i className="fi fi-rs-cross i-16" />
-        </ButtonTransparent>
-      </div>
-      <TextInput
-        onChange={(e) => {
-          dataRef.current = {
-            ...dataRef?.current,
-            username: e?.target?.value,
-          };
-        }}
-        tabIndex={2}
-        autoFocus
-        placeholder={tGeneral("username")}
-        icon="fi-rs-user"
-      />
-      <TextInput
-        onChange={(e) => {
-          dataRef.current = {
-            ...dataRef?.current,
-            password: e?.target?.value,
-          };
-        }}
-        type="password"
-        icon="fi-rs-key"
-        placeholder={tGeneral("password")}
-      />
-      <div className="error-text">{errorText?.toString()}</div>
-      <ButtonSecondary
-        className="center-content-btn"
-        disabled={isLoading}
-        onClick={() => {
-          onSubmit();
-        }}
-        type="button"
-      >
-        {/* <i className="fi fi-rs-disk i-16" /> */}
-        {/* <div>{tGeneral("save")}</div> */}
-        <div>{tGeneral("confirm")}</div>
-        <ClipLoader
-          color="var(--white)"
-          loading={isLoading === true}
-          size={"20px"}
+    const onSubmit = (e) => {
+      e?.preventDefault();
+      setErrorText("");
+      mutate(dataRef?.current);
+    };
+
+    return (
+      <FormWrapper>
+        <div className="titl">
+          <div />
+          <div>{tGeneral("login")?.toUpperCase()}</div>
+          <ButtonTransparent type="button" size="small" onClick={onClose}>
+            <i className="fi fi-rs-cross i-16" />
+          </ButtonTransparent>
+        </div>
+        <TextInput
+          onChange={(e) => {
+            dataRef.current = {
+              ...dataRef?.current,
+              username: e?.target?.value,
+            };
+          }}
+          tabIndex={2}
+          autoFocus
+          placeholder={tGeneral("username")}
+          icon="fi-rs-user"
         />
-      </ButtonSecondary>
-    </FormWrapper>
-  );
-});
+        <TextInput
+          onChange={(e) => {
+            dataRef.current = {
+              ...dataRef?.current,
+              password: e?.target?.value,
+            };
+          }}
+          type="password"
+          icon="fi-rs-key"
+          tabIndex={3}
+          placeholder={tGeneral("password")}
+        />
+        <div
+          className="error-text"
+          dangerouslySetInnerHTML={{
+            __html: errorText?.toString(),
+          }}
+        />
+        <ButtonSecondary
+          className="center-content-btn"
+          disabled={isLoading}
+          onClick={() => {
+            onSubmit();
+          }}
+          type="button"
+        >
+          {/* <i className="fi fi-rs-disk i-16" /> */}
+          {/* <div>{tGeneral("save")}</div> */}
+          <div>{tGeneral("confirm")}</div>
+          <ClipLoader
+            color="var(--white)"
+            loading={isLoading === true}
+            size={"20px"}
+          />
+        </ButtonSecondary>
+      </FormWrapper>
+    );
+  },
+);
 
 export default LoginModalContent;

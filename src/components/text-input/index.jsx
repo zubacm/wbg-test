@@ -28,6 +28,9 @@ const TextInput = forwardRef(
         className={`input-wrapper ${className}`}
         isFocused={isFocused}
         ref={ref}
+        onClick={() => {
+          inputRef?.current?.focus()
+        }}
       >
         {showIcon === true && <i className={`fi ${icon ?? "fi-rs-route"} i-16`} />}
         <input

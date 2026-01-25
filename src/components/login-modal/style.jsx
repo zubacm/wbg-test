@@ -48,10 +48,8 @@ export const FormWrapper = styled.form`
     margin-top: 0.5rem;
   }
 
-  @media (max-width: 22rem) {
-    min-width: calc(100dvw - 32px);
-    max-width: calc(100dvw - 32px);
-    min-height: 100dvh;
-    max-height: 100dvh;
+  @media (max-width: 26rem) {
+    min-width: calc(100dvw - 40px);
+    max-width: calc(100dvw - 40px);
   }
 `;

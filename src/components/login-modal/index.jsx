@@ -8,7 +8,7 @@ import LoginModalContent from "./content";
 const LoginModal = forwardRef(({ onSetUser = () => {} }, ref) => {
   return (
     <>
-      <dialog ref={ref}>
+      <dialog ref={ref} className="save-tour-dialog">
         <LoginModalContent
           //   onOpenTour={(tour) => {
           //     onOpenTour(tour);

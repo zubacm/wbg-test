@@ -381,7 +381,7 @@ export default function TourBuilderContent() {
         onSelectPlace={handleSelectPlace}
       />
 
-      <ToastContainer />
+      <ToastContainer style={{ zIndex: 99999 }} />
     </>
   );
 }

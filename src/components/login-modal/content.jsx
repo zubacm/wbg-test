@@ -2,7 +2,7 @@
 "use client";
 
 /* eslint-disable react/jsx-key */
-import { forwardRef, useRef } from "react";
+import { forwardRef, useRef, useState } from "react";
 import { FormWrapper } from "./style";
 import TextInput from "../text-input";
 import ButtonSecondary from "../buttons/button-secondary";
@@ -11,9 +11,12 @@ import ButtonTransparent from "../buttons/button-transparent";
 import { useToken } from "@/app/api/auth/queries";
 import { ClipLoader } from "react-spinners";
 import { storeCredentials } from "@/app/api/auth/indexdb";
+import { toast } from "react-toastify";
 
 const LoginModalContent = forwardRef(({ onClose = () => {}, onSetUser = () => {} }, ref) => {
   const tGeneral = useTranslations("general");
+
+  const [errorText, setErrorText] = useState("");
 
   const dataRef = useRef({
     username: "",
@@ -33,14 +36,18 @@ const LoginModalContent = forwardRef(({ onClose = () => {}, onSetUser = () => {}
   };
 
   const { mutate, isLoading } = useToken(
-    () => successLogin(),
-    () => {
-      toast.error(tGeneral("wrongCredentials"));
+    () => successLogin(
+      setErrorText("")
+    ),
+    (e) => {
+      setErrorText(e?.response?.data?.message || tGeneral("wrongCredentials"));
+      // toast.error(tGeneral("wrongCredentials"));
     },
   );
 
   const onSubmit = (e) => {
     e?.preventDefault();
+    setErrorText("");
     mutate(dataRef?.current);
   };
 
@@ -76,6 +83,7 @@ const LoginModalContent = forwardRef(({ onClose = () => {}, onSetUser = () => {}
         icon="fi-rs-key"
         placeholder={tGeneral("password")}
       />
+      <div className="error-text">{errorText?.toString()}</div>
       <ButtonSecondary
         className="center-content-btn"
         disabled={isLoading}

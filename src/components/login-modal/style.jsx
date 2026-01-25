@@ -28,6 +28,12 @@ export const FormWrapper = styled.form`
   min-width: 22rem;
   max-width: 22rem;
 
+  & .error-text {
+    color: var(--error);
+    font-size: 0.875rem;
+    min-height: 1.25rem;
+  }
+
   & .titl {
     text-align: center;
     display: flex;
@@ -43,8 +49,8 @@ export const FormWrapper = styled.form`
   }
 
   @media (max-width: 22rem) {
-    min-width: 100dvw;
-    max-width: 100dvw;
+    min-width: calc(100dvw - 32px);
+    max-width: calc(100dvw - 32px);
     min-height: 100dvh;
     max-height: 100dvh;
   }

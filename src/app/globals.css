@@ -124,6 +124,8 @@
 
     --primary-30: #d4f3d4;
     --primary-100: #6fd46f;
+
+    --error: #e53a35;
   }
 }
 
@@ -371,6 +373,10 @@ dialog {
   }
 }
 
+.Toastify {
+  z-index: 9999;
+}
+
 .cover-full-div {
   width: 100dvw;
   height: 100dvh;
@@ -415,6 +421,6 @@ div[id^="react-select-2-option-"] {
 }
 @media (prefers-color-scheme: dark) {
   .leaflet-interactive:not([fill-rule="evenodd"]) {
-    stroke: #0D2F2B;
+    stroke: #0d2f2b;
   }
 }

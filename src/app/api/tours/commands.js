@@ -5,7 +5,17 @@ import api from "../api";
 
 const addTour = async (data) => {
   console.log("add tour", data);
-  let { data: responseData } = await api.post(`/user-tour`, data);
+  const body = { ...data, places: data?.places || data?.acf?.places };
+
+  delete body.authUser;
+  delete body.acf;
+
+  let { data: responseData } = await api.post(`/user-tour`, body, {
+    headers: {
+      Authorization: `Basic ${btoa(data?.authUser?.username + ":" + data?.authUser?.password)}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   return responseData;
 };
@@ -31,7 +41,17 @@ export const useAddTour = (successCallbackFn, errorCallbackFn) => {
 // ===================================================================================================
 
 const editTour = async (data) => {
-  let { data: responseData } = await api.put(`/user-tour`, data);
+  const body = { ...data, places: data?.places || data?.acf?.places };
+
+  delete body.authUser;
+  delete body.acf;
+
+  let { data: responseData } = await api.put(`/user-tour`, body, {
+    headers: {
+      Authorization: `Basic ${btoa(data?.authUser?.username + ":" + data?.authUser?.password)}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   return responseData;
 };

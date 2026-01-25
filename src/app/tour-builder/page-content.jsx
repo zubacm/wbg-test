@@ -11,11 +11,42 @@ import { PLACE_PARAM, TOUR_PARAM } from "@/lib/consts/style-consts";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { usePlacesByIds, useTourPlaces } from "../api/locations/queries";
 import { isDefined } from "@/lib/util";
+import { getCredentials, logout } from "../api/auth/indexdb";
 // import TourGuideSidebar from "@/components/layout/tour-guide-sidebar";
 
 export default function TourBuilderContent() {
   const router = useRouter();
   const pathname = usePathname();
+
+  const hasRun = useRef(false);
+
+  const [authUser, setAuthUser] = useState(null);
+
+  useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+
+    (async () => {
+      const creds = await getCredentials();
+
+      if (!creds) {
+        console.log("No stored credentials");
+        return;
+      }
+
+      // USE THEM IMMEDIATELY
+
+      setAuthUser({ username: creds.username, password: creds.password });
+
+      // IMPORTANT: discard immediately
+      creds.username = null;
+      creds.password = null;
+    })();
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+  };
 
   const searchParams = useSearchParams();
   const tourId = searchParams?.get(TOUR_PARAM) || null;
@@ -52,16 +83,16 @@ export default function TourBuilderContent() {
     mapRef?.current?.onChangeLocations(selectedLocationsRef?.current);
 
     const minLat = Math.min(
-      ...selectedLocationsRef?.current?.map((x) => x?.lat)
+      ...selectedLocationsRef?.current?.map((x) => x?.lat),
     );
     const minLng = Math.min(
-      ...selectedLocationsRef?.current?.map((x) => x?.lng)
+      ...selectedLocationsRef?.current?.map((x) => x?.lng),
     );
     const maxLat = Math.max(
-      ...selectedLocationsRef?.current?.map((x) => x?.lat)
+      ...selectedLocationsRef?.current?.map((x) => x?.lat),
     );
     const maxLng = Math.max(
-      ...selectedLocationsRef?.current?.map((x) => x?.lng)
+      ...selectedLocationsRef?.current?.map((x) => x?.lng),
     );
     mapRef?.current?.onChangeBounds([
       [minLat, minLng],
@@ -102,16 +133,16 @@ export default function TourBuilderContent() {
       mapRef?.current?.onChangeLocations(selectedLocationsRef?.current);
 
       const minLat = Math.min(
-        ...selectedLocationsRef?.current?.map((x) => x?.lat)
+        ...selectedLocationsRef?.current?.map((x) => x?.lat),
       );
       const minLng = Math.min(
-        ...selectedLocationsRef?.current?.map((x) => x?.lng)
+        ...selectedLocationsRef?.current?.map((x) => x?.lng),
       );
       const maxLat = Math.max(
-        ...selectedLocationsRef?.current?.map((x) => x?.lat)
+        ...selectedLocationsRef?.current?.map((x) => x?.lat),
       );
       const maxLng = Math.max(
-        ...selectedLocationsRef?.current?.map((x) => x?.lng)
+        ...selectedLocationsRef?.current?.map((x) => x?.lng),
       );
       mapRef?.current?.onChangeBounds([
         [minLat, minLng],
@@ -137,7 +168,7 @@ export default function TourBuilderContent() {
     } else {
       selectedLocationsRef.current = [
         ...(selectedLocationsRef?.current || [])?.filter(
-          (x) => x?.id !== newPlace?.id
+          (x) => x?.id !== newPlace?.id,
         ),
       ];
       setSelectedLocations([...selectedLocationsRef?.current]);
@@ -150,11 +181,11 @@ export default function TourBuilderContent() {
   // to service
   const handleSwap = (draggingItem, swappedWithItem) => {
     var draggingLocation = selectedLocationsRef?.current?.find(
-      (x) => x.id === +draggingItem
+      (x) => x.id === +draggingItem,
     );
     const dragginDispSequence = draggingLocation?.displaySequence;
     var swappedLocation = selectedLocationsRef?.current?.find(
-      (x) => x.id === +swappedWithItem
+      (x) => x.id === +swappedWithItem,
     );
     const swappedDisSequence = swappedLocation?.displaySequence;
 
@@ -177,7 +208,7 @@ export default function TourBuilderContent() {
 
   const onRemoveLocation = (id) => {
     selectedLocationsRef.current = selectedLocationsRef.current?.filter(
-      (x) => x.id !== +id
+      (x) => x.id !== +id,
     );
 
     setSelectedLocations([...selectedLocationsRef?.current]);
@@ -193,7 +224,7 @@ export default function TourBuilderContent() {
 
     if (placesArray?.some((x) => x?.toString() === id?.toString())) {
       var filtered = placesArray?.filter(
-        (x) => x?.toString() !== id?.toString()
+        (x) => x?.toString() !== id?.toString(),
       );
 
       if (filtered?.length > 0) {
@@ -248,8 +279,7 @@ export default function TourBuilderContent() {
           if (index === selectedLocationsRef?.current?.length - 1) {
             tourPath += `&destination=${x?.lat},${x?.lng}`;
             // } else if (index === 1 && selectedLocationsRef?.current?.length > 2) {
-          }
-          else if (index === 0) {
+          } else if (index === 0) {
             tourPath += `&waypoints=${x?.lat},${x?.lng}`;
           } else {
             tourPath += `|${x?.lat},${x?.lng}`;
@@ -294,6 +324,11 @@ export default function TourBuilderContent() {
             onToggleShowOnlySelected={() =>
               mapLocationsRef?.current?.toggleShowOnlySelectedLocations()
             }
+            onSetUser={(user) => {
+              setAuthUser(user);
+            }}
+            authUser={authUser}
+            onLogout={handleLogout}
           />
         </Suspense>
 
@@ -336,6 +371,7 @@ export default function TourBuilderContent() {
           tourName={tourTitle}
           id={tour?.id}
           isEdit={tour?.id !== null && tour?.id !== undefined}
+          authUser={authUser}
         />
       </TourBuilderMainStyled>
 

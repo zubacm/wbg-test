@@ -13,6 +13,7 @@ import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useVerticalSwipe } from "@/app/hooks/useSwipeDirection";
 import ShareToDialog from "@/components/share-to-dialog";
+import { isDefined } from "@/lib/util";
 
 export default function MobileMenu({
   ref,
@@ -23,6 +24,9 @@ export default function MobileMenu({
   canSaveTour = false,
   onGetNavigationUrl = () => {},
   onSearch = () => {},
+  onLogin = () => {},
+  onLogout = () => {},
+  authUser,
 }) {
   const t = useTranslations("general");
   const shareButtonRef = useRef();
@@ -31,7 +35,7 @@ export default function MobileMenu({
 
   const swipeHandlers = useVerticalSwipe(
     () => setOpen(false),
-    () => {}
+    () => {},
   );
 
   const handleWindowClick = (e) => {
@@ -73,9 +77,23 @@ export default function MobileMenu({
                 {/* <DrawerBody> */}
                 <MobileMenuDrawerContent className="mobile-menu-drawer-content">
                   <div className="padded-div">
-                    <ButtonNeutral className="login-btn" center={true}>
-                      {t("login")}
-                    </ButtonNeutral>
+                    {isDefined(authUser?.username) ? (
+                      <ButtonNeutral
+                        className="login-btn"
+                        center={true}
+                        onClick={onLogout}
+                      >
+                        {t("logout")}
+                      </ButtonNeutral>
+                    ) : (
+                      <ButtonNeutral
+                        className="login-btn"
+                        center={true}
+                        onClick={onLogin}
+                      >
+                        {t("login")}
+                      </ButtonNeutral>
+                    )}
                   </div>
                   <HorizontalLine />
                   <div className="padded-div">

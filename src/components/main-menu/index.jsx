@@ -6,7 +6,7 @@ import MainMenuDesktop from "./main-menu-desktop";
 import OpenSavedToursModal from "../open-saved-tours-modal";
 import Navbar from "../layout/navbar";
 import SearchPlacesAndHashtags from "../search-places-and-hashtags";
-// import LoginModal from "../login-modal";
+import LoginModal from "../login-modal";
 
 export default function MainMenu({
   onOpenTour = () => {},
@@ -14,7 +14,11 @@ export default function MainMenu({
   canSaveTour = false,
   onGetNavigationUrl = () => {},
   onSearchSelectPlace = () => {},
+  onSetUser = () => {},
+  onLogout = () => {},
+  authUser
 }) {
+  const loginModalRef = useRef();
   const languageModalRef = useRef();
   const openSavedTourModalRef = useRef();
   const searchRef = useRef();
@@ -31,6 +35,9 @@ export default function MainMenu({
         onShareTour={() => {}}
         onExitTourBuilder={() => {}}
         onSearch={onSearch}
+        onLogin={() => loginModalRef?.current?.showModal()}
+        authUser={authUser}
+        onLogout={() => onLogout()}
       />
 
       {/* rename to mobile mainmenu */}
@@ -43,13 +50,17 @@ export default function MainMenu({
         canSaveTour={canSaveTour}
         onGetNavigationUrl={onGetNavigationUrl}
         onSearch={onSearch}
+        onLogin={() => loginModalRef?.current?.showModal()}
+        authUser={authUser}
+        onLogout={() => onLogout()}
       />
 
       <ChooseLanguageModal ref={languageModalRef} />
-      {/* <LoginModal ref={languageModalRef}/> */}
+      <LoginModal ref={loginModalRef} onSetUser={onSetUser}/>
       <OpenSavedToursModal
         ref={openSavedTourModalRef}
         onOpenTour={onOpenTour}
+        authUser={authUser}
       />
 
       <SearchPlacesAndHashtags

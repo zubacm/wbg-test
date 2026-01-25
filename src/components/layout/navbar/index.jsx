@@ -15,6 +15,9 @@ export default function Navbar({
   canSaveTour = false,
   onGetNavigationUrl,
   onSearch,
+  authUser,
+  onLogin,
+  onLogout,
 }) {
   const t = useTranslations("general");
 
@@ -56,6 +59,9 @@ export default function Navbar({
           canSaveTour={canSaveTour}
           onGetNavigationUrl={onGetNavigationUrl}
           onSearch={onSearch}
+          onLogin={onLogin}
+          authUser={authUser}
+          onLogout={onLogout}
         />
       </NavbarSection>
     </NavbarWrapper>

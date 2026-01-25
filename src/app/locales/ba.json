@@ -69,7 +69,11 @@
         "showAllPlaces": "Prikaži sva mjesta",
         "selectLocations": "Izaberi lokacije",
         "planAndStart": "Planiraj i kreni",
-        "openYourTour": "Otvori svoju turu"
+        "openYourTour": "Otvori svoju turu",
+        "confirm": "Potvrdi",
+        "password": "Lozinka",
+        "username": "Korisničko ime",
+        "wrongCredentials": "Pogrešni kredencijali!"
     },
     "languages": {
         "chooseLanguage": "Izaberite jezik",

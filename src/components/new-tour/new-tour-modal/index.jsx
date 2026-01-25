@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 
 const NewTourModal = forwardRef(
-  ({ tourName, id, isEdit = false, places }, ref) => {
+  ({ tourName, id, isEdit = false, places, authUser }, ref) => {
     const t = useTranslations("general");
 
     const dialogRef = useRef();
@@ -50,11 +50,12 @@ const NewTourModal = forwardRef(
       if (isEdit === true) {
         mutateEdit({
           id,
+          authUser,
           title: tourName,
           acf: { places: locationsRef?.current },
         });
       } else {
-        mutateAdd({ title: tourName, acf: { places: locationsRef?.current } });
+        mutateAdd({ authUser, title: tourName, acf: { places: locationsRef?.current } });
       }
     };
 

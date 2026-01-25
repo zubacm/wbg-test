@@ -15,6 +15,7 @@ import { usePathname, useRouter } from "next/navigation";
 export default function OpenSavedToursModalContent({
   onClose = () => {},
   onOpenTour = () => {},
+  authUser,
 }) {
   const t = useTranslations("general");
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function OpenSavedToursModalContent({
     data: tours,
     isLoading,
     hasMore,
-  } = useSavedToursHook({ page, perPage: 50 });
+  } = useSavedToursHook({ page, perPage: 50, authUser });
 
   return (
     <Wrapper>

@@ -69,7 +69,11 @@
         "showAllPlaces": "Show all places",
         "selectLocations": "Select locations",
         "planAndStart": "Plan & start",
-        "openYourTour": "Open your tour"
+        "openYourTour": "Open your tour",
+        "confirm": "Confirm",
+        "password": "Password",
+        "username": "Username",
+        "wrongCredentials": "Wrong credentials!"
     },
     "languages": {
         "chooseLanguage": "Choose language",

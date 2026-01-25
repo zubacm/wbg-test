@@ -5,28 +5,35 @@ import api from "../api";
 import { useEffect, useState } from "react";
 import { isDefined } from "@/lib/util";
 
-const getSavedTours = async (page = 1, perPage = 100) => {
+const getSavedTours = async (page = 1, perPage = 100, authUser) => {
+  // authUser
   const { data } = await api.get(
-    `/user-tour?_fields[]=id&_fields[]=title&_fields[]=acf&per_page=${perPage}&page=${page}`
+    `/user-tour?_fields[]=id&_fields[]=title&_fields[]=acf&per_page=${perPage}&page=${page}`,
+    { 
+      headers: {
+        Authorization: `Basic ${btoa(authUser?.username + ":" + authUser?.password)}`,
+      }
+    }
   );
 
   return data;
 };
 
-export const useSavedTours = ({ page, perPage }) => {
+export const useSavedTours = ({ page, perPage, authUser }) => {
   return useQuery({
-    queryKey: ["saved-tours", page, perPage],
-    queryFn: async () => getSavedTours(page, perPage),
+    queryKey: ["saved-tours", page, perPage, authUser?.username ?? ""],
+    queryFn: async () => getSavedTours(page, perPage, authUser),
     enabled: page > 0,
   });
 };
 
 // ===================================================================================
 
-export const useSavedToursHook = ({ page, perPage }) => {
+export const useSavedToursHook = ({ page, perPage, authUser }) => {
   const { data, isLoading, isFetching, error } = useSavedTours({
     page,
     perPage,
+    authUser
   });
 
   const [tours, setTours] = useState([]);

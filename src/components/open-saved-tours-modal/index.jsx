@@ -5,7 +5,7 @@
 import { forwardRef } from "react";
 import OpenSavedToursModalContent from "./content";
 
-const OpenSavedToursModal = forwardRef(({ onOpenTour = () => {} }, ref) => {
+const OpenSavedToursModal = forwardRef(({ onOpenTour = () => {}, authUser }, ref) => {
   return (
     <>
       <dialog ref={ref}>
@@ -14,6 +14,7 @@ const OpenSavedToursModal = forwardRef(({ onOpenTour = () => {} }, ref) => {
             onOpenTour(tour);
             ref.current.close();
           }}
+          authUser={authUser}
           onClose={() => ref.current.close()}
         />
       </dialog>

@@ -25,6 +25,8 @@ export const FormWrapper = styled.form`
   flex-direction: column;
   gap: 1rem;
   padding: 1.25rem;
+  min-width: 22rem;
+  max-width: 22rem;
 
   & .titl {
     text-align: center;
@@ -38,5 +40,12 @@ export const FormWrapper = styled.form`
   }
   & .center-content-btn {
     margin-top: 0.5rem;
+  }
+
+  @media (max-width: 22rem) {
+    min-width: 100dvw;
+    max-width: 100dvw;
+    min-height: 100dvh;
+    max-height: 100dvh;
   }
 `;

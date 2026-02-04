@@ -12,6 +12,12 @@ export const Wrapper = styled.div`
   cursor: pointer;
   height: 60px;
   color: var(--gray-100);
+  .only-mob {
+    display: none;
+  }
+  .only-desk {
+    display: block;
+  }
   &:hover {
     border: 1px solid var(--gray-50);
   }
@@ -77,6 +83,13 @@ export const Wrapper = styled.div`
   @media (max-width: ${MEDIUM_SIZE_PX + "px"}) {
     height: 44px;
     align-items: center;
+
+    .only-mob {
+      display: block;
+    }
+    .only-desk {
+      display: none;
+    }
 
     & .place-img,
     .tour-item-txt {

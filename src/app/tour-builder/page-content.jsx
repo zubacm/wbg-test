@@ -36,7 +36,7 @@ export default function TourBuilderContent() {
 
       // USE THEM IMMEDIATELY
 
-      setAuthUser({ username: creds.username, password: creds.password });
+      setAuthUser({ username: creds.username, password: creds.password, token: creds.token });
 
       // IMPORTANT: discard immediately
       creds.username = null;

@@ -1,22 +1,29 @@
-function openDB() {
+export function openDB() {
   return new Promise((resolve, reject) => {
-    const req = indexedDB.open("auth-db", 1);
+    if (typeof indexedDB === "undefined") {
+      reject(new Error("indexedDB is not available (SSR / non-browser environment)"));
+      return;
+    }
 
-    req.onupgradeneeded = () => {
-      const db = req.result;
-      db.createObjectStore("meta");
-      db.createObjectStore("auth");
+    const request = indexedDB.open("auth-db", 2);
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+
+      if (!db.objectStoreNames.contains("meta")) db.createObjectStore("meta");
+      if (!db.objectStoreNames.contains("auth")) db.createObjectStore("auth");
     };
 
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
+    request.onsuccess = (event) => resolve(event.target.result);
+    request.onerror = () => reject(request.error);
+    request.onblocked = () => reject(new Error("IndexedDB open blocked (another tab still has it open)"));
   });
 }
 
 async function getAppSecret() {
   // Open the database
   const db = await new Promise((resolve, reject) => {
-    const request = indexedDB.open("auth-db", 1);
+    const request = indexedDB.open("auth-db", 2);
 
     request.onupgradeneeded = () => {
       const db = request.result;
@@ -76,14 +83,15 @@ async function deriveKey(secret, salt) {
    Store credentials
 ======================= */
 
-export async function storeCredentials(username, password) {
+export async function storeCredentials(username, password, token) {
   const secret = await getAppSecret();
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
 
   const key = await deriveKey(secret, salt);
+  console.log("stpre tplem", token)
   const data = new TextEncoder().encode(
-    JSON.stringify({ username, password })
+    JSON.stringify({ username, password, token })
   );
 
   const cipher = await crypto.subtle.encrypt(
@@ -134,7 +142,7 @@ export async function getCredentials() {
 export async function logout() {
   try {
     const db = await new Promise((resolve, reject) => {
-      const req = indexedDB.open("auth-db", 1);
+      const req = indexedDB.open("auth-db", 2);
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });

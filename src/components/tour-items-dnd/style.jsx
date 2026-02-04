@@ -6,6 +6,10 @@ export const DndContainer = styled.div`
   flex-direction: column;
   gap: 16px;
   transition: all 0.2s ease-out;
+  .cnt {
+    display: flex;
+    align-items: center;
+  }
   @media (max-width: ${MEDIUM_SIZE_PX + "px"}) {
     gap: 8px;
      max-height: 250px;

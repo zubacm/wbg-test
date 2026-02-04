@@ -17,7 +17,7 @@ export default function TourItem({
   displaySequence = 1,
   onRemoveLocation = () => {},
   featuredMedia,
-  swapy
+  swapy,
 }) {
   const t = useTranslations("general");
   // const { data } = usePlaceImage(featuredMedia);
@@ -37,12 +37,21 @@ export default function TourItem({
           <i className="fi fi-rs-sort" />
         </div>
       )} */}
-
-      {swapy || <div data-swapy-handle>
+      <div className="only-mob" data-swapy-handle>
         <div className="chevron-icons mobile-swapy-handle">
           <i className="fi fi-rs-sort" />
         </div>
-      </div>}
+      </div>
+      <div className="only-desk">
+        <div className="chevron-icons mobile-swapy-handle">
+          <i className="fi fi-rs-sort" />
+        </div>
+      </div>
+      {/* {swapy || <div data-swapy-handle>
+        <div className="chevron-icons mobile-swapy-handle">
+          <i className="fi fi-rs-sort" />
+        </div>
+      </div>} */}
       <Image
         src={
           thumbnail ||

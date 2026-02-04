@@ -12,7 +12,8 @@ const addTour = async (data) => {
 
   let { data: responseData } = await api.post(`/user-tour`, body, {
     headers: {
-      Authorization: `Basic ${btoa(data?.authUser?.username + ":" + data?.authUser?.password)}`,
+      // Authorization: `Basic ${btoa(data?.authUser?.username + ":" + data?.authUser?.password)}`,
+      Authorization: `Bearer ${data?.authUser?.token}`,
       "Content-Type": "application/json",
     },
   });
@@ -48,7 +49,8 @@ const editTour = async (data) => {
 
   let { data: responseData } = await api.put(`/user-tour`, body, {
     headers: {
-      Authorization: `Basic ${btoa(data?.authUser?.username + ":" + data?.authUser?.password)}`,
+      // Authorization: `Basic ${btoa(data?.authUser?.username + ":" + data?.authUser?.password)}`,
+      Authorization: `Bearer ${data?.authUser?.token}`,
       "Content-Type": "application/json",
     },
   });

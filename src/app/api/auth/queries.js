@@ -19,8 +19,8 @@ const getToken = async (body) => {
 export const useToken = (successCallbackFn, errorCallbackFn) => {
   return useMutation({
     mutationFn: getToken,
-    onSuccess: () => {
-      successCallbackFn?.();
+    onSuccess: (response) => {
+      successCallbackFn?.(response);
     },
     onError: (response) => {
       errorCallbackFn?.(response);

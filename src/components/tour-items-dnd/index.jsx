@@ -37,7 +37,7 @@ export default function TourItemsDnd(props) {
       ...a,
       [index]: v?.id,
     }),
-    {}
+    {},
   );
 
   // const ItemComponents = {
@@ -75,7 +75,7 @@ export default function TourItemsDnd(props) {
         </>
       ),
     }),
-    {}
+    {},
   );
 
   // const ItemComponents = {
@@ -101,7 +101,12 @@ export default function TourItemsDnd(props) {
         {Object.entries(slotItems).map(([key, value], index) => (
           <Fragment key={`tour__item__${value}`}>
             <div data-swapy-slot={`slot-${value}`}>
-              <div data-swapy-item={value}>{ItemComponents[`${value}`]}</div>
+              {/* <div data-swapy-item={value}>{ItemComponents[`${value}`]}</div> */}
+              <div className="cnt" data-swapy-item={value}>
+                {/* <div data-swapy-handle>MOJ HANDLE</div> */}
+
+                {ItemComponents[`${value}`]}
+              </div>
             </div>
           </Fragment>
         ))}

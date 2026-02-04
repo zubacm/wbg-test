@@ -24,20 +24,26 @@ const LoginModalContent = forwardRef(
       password: "",
     });
 
-    const successLogin = async () => {
+    const successLogin = async (token) => {
       await storeCredentials(
         dataRef?.current?.username,
         dataRef?.current?.password,
+        token
       );
       onSetUser({
         username: dataRef?.current?.username,
         password: dataRef?.current?.password,
+        token
       });
       onClose();
     };
 
     const { mutate, isLoading } = useToken(
-      () => successLogin(setErrorText("")),
+      (res) => {
+        console.log("rs", res?.token)
+        successLogin(res?.token);
+        setErrorText("")
+      },
       (e) => {
         setErrorText(
           e?.response?.data?.message || tGeneral("wrongCredentials"),

@@ -11,7 +11,8 @@ const getSavedTours = async (page = 1, perPage = 100, authUser) => {
     `/user-tour?_fields[]=id&_fields[]=title&_fields[]=acf&per_page=${perPage}&page=${page}`,
     { 
       headers: {
-        Authorization: `Basic ${btoa(authUser?.username + ":" + authUser?.password)}`,
+        Authorization: `Bearer ${authUser?.token}`,
+        // Authorization: `Basic ${btoa(authUser?.username + ":" + authUser?.password)}`,
       }
     }
   );

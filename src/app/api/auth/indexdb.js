@@ -89,7 +89,6 @@ export async function storeCredentials(username, password, token) {
   const iv = crypto.getRandomValues(new Uint8Array(12));
 
   const key = await deriveKey(secret, salt);
-  console.log("stpre tplem", token)
   const data = new TextEncoder().encode(
     JSON.stringify({ username, password, token })
   );
@@ -167,5 +166,18 @@ export async function logout() {
     };
   } catch (err) {
     console.error("Logout failed:", err);
+  }
+}
+
+// JWT "exp" is seconds since epoch
+export function isJwtExpired(token, skewSeconds = 30) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const exp = payload?.exp;
+    if (!exp) return true;
+    const now = Math.floor(Date.now() / 1000);
+    return exp <= now + skewSeconds;
+  } catch {
+    return true;
   }
 }

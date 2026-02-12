@@ -5,7 +5,6 @@ import { Wrapper } from "./style";
 import { useTranslations } from "next-intl";
 import React from "react";
 import ButtonTransparent from "../buttons/button-transparent";
-import { usePlaceImage } from "@/app/api/locations/queries";
 import useDetectSmallScreen from "@/app/hooks/use-detect-small-screen";
 
 export default function TourItem({
@@ -37,11 +36,13 @@ export default function TourItem({
           <i className="fi fi-rs-sort" />
         </div>
       )} */}
-      <div className="only-mob" data-swapy-handle>
-        <div className="chevron-icons mobile-swapy-handle">
-          <i className="fi fi-rs-sort" />
+      {isSmallScreen && (
+        <div className="only-mob" data-swapy-handle>
+          <div className="chevron-icons mobile-swapy-handle">
+            <i className="fi fi-rs-sort" />
+          </div>
         </div>
-      </div>
+      )}
       <div className="only-desk">
         <div className="chevron-icons mobile-swapy-handle">
           <i className="fi fi-rs-sort" />

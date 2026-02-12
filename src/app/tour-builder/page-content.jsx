@@ -11,7 +11,7 @@ import { PLACE_PARAM, TOUR_PARAM } from "@/lib/consts/style-consts";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { usePlacesByIds, useTourPlaces } from "../api/locations/queries";
 import { isDefined } from "@/lib/util";
-import { getCredentials, logout } from "../api/auth/indexdb";
+import { getCredentials, isJwtExpired, logout } from "../api/auth/indexdb";
 // import TourGuideSidebar from "@/components/layout/tour-guide-sidebar";
 
 export default function TourBuilderContent() {
@@ -29,13 +29,8 @@ export default function TourBuilderContent() {
     (async () => {
       const creds = await getCredentials();
 
-      if (!creds) {
-        console.log("No stored credentials");
-        return;
-      }
 
       // USE THEM IMMEDIATELY
-
       setAuthUser({ username: creds.username, password: creds.password, token: creds.token });
 
       // IMPORTANT: discard immediately

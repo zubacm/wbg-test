@@ -40,7 +40,6 @@ const LoginModalContent = forwardRef(
 
     const { mutate, isLoading } = useToken(
       (res) => {
-        console.log("rs", res?.token)
         successLogin(res?.token);
         setErrorText("")
       },

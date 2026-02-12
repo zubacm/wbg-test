@@ -3,7 +3,7 @@ import api, { api2 } from "../api";
 
 // ====================================================================================================
 
-const getToken = async (body) => {
+export const getToken = async (body) => {
   // const body = {
   //   username: "marina",
   //   password: "PKZt3*K39btfdq^Z7Tm$4v6H",
@@ -12,7 +12,6 @@ const getToken = async (body) => {
     `/token`, body
   );
 
-  console.log("getToken", data);
   return data;
 };
 

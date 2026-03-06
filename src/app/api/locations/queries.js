@@ -29,7 +29,7 @@ export const useLocations = (search, countries) => {
 const getPlaces = async ({
   text,
   // perPage = Number.MAX_SAFE_INTEGER, // TODO
-  perPage = 100,
+  perPage = 1000,
   countries,
   features,
   types,
@@ -77,7 +77,7 @@ const getPlaces = async ({
     path += `hashtag=${hashtags.join(",")}&`;
   }
 
-  path += `_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=location&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard&per_page=${perPage}`;
+  path += `_fields[]=id&_fields[]=title&_fields[]=link&_fields[]=location&_fields[]=country_&_fields[]=hashtag&_fields[]=type_&_fields[]=feature&_fields[]=featured_media&_fields[]=acf&acf_format=standard&max_results=${perPage}`;
   // const { data } = await api.get(`/place?_fields[]=id&_fields[]=name&_fields[]=slug&_fields[]=acf&acf_format=standard&per_page=100`);
 
   const { data } = await api.get(path);

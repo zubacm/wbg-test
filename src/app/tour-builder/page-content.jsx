@@ -27,15 +27,20 @@ export default function TourBuilderContent() {
     hasRun.current = true;
 
     (async () => {
-      const creds = await getCredentials();
+      let creds = await getCredentials();
+
+      if(creds === undefined || creds === null) {
+        creds = { username: null, password: null, token: null };
+      }
 
 
       // USE THEM IMMEDIATELY
-      setAuthUser({ username: creds.username, password: creds.password, token: creds.token });
+      setAuthUser({ username: creds?.username, password: creds?.password, token: creds?.token });
 
       // IMPORTANT: discard immediately
       creds.username = null;
       creds.password = null;
+      creds.token = null;
     })();
   }, []);
 

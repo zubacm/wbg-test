@@ -1,7 +1,9 @@
 export function openDB() {
   return new Promise((resolve, reject) => {
     if (typeof indexedDB === "undefined") {
-      reject(new Error("indexedDB is not available (SSR / non-browser environment)"));
+      reject(
+        new Error("indexedDB is not available (SSR / non-browser environment)"),
+      );
       return;
     }
 
@@ -16,7 +18,10 @@ export function openDB() {
 
     request.onsuccess = (event) => resolve(event.target.result);
     request.onerror = () => reject(request.error);
-    request.onblocked = () => reject(new Error("IndexedDB open blocked (another tab still has it open)"));
+    request.onblocked = () =>
+      reject(
+        new Error("IndexedDB open blocked (another tab still has it open)"),
+      );
   });
 }
 
@@ -62,7 +67,7 @@ async function deriveKey(secret, salt) {
     secret,
     "PBKDF2",
     false,
-    ["deriveKey"]
+    ["deriveKey"],
   );
 
   return crypto.subtle.deriveKey(
@@ -75,7 +80,7 @@ async function deriveKey(secret, salt) {
     baseKey,
     { name: "AES-GCM", length: 256 },
     false,
-    ["encrypt", "decrypt"]
+    ["encrypt", "decrypt"],
   );
 }
 
@@ -90,23 +95,22 @@ export async function storeCredentials(username, password, token) {
 
   const key = await deriveKey(secret, salt);
   const data = new TextEncoder().encode(
-    JSON.stringify({ username, password, token })
+    JSON.stringify({ username, password, token }),
   );
 
   const cipher = await crypto.subtle.encrypt(
     { name: "AES-GCM", iv },
     key,
-    data
+    data,
   );
 
   const db = await openDB();
   const tx = db.transaction("auth", "readwrite");
   tx.objectStore("auth").put(
     { cipher, salt, iv, createdAt: Date.now() },
-    "creds"
+    "creds",
   );
 }
-
 
 /* =======================
    Read credentials
@@ -128,15 +132,13 @@ export async function getCredentials() {
       const decrypted = await crypto.subtle.decrypt(
         { name: "AES-GCM", iv: req.result.iv },
         key,
-        req.result.cipher
+        req.result.cipher,
       );
 
       resolve(JSON.parse(new TextDecoder().decode(decrypted)));
     };
   });
 }
-
-
 
 export async function logout() {
   try {
